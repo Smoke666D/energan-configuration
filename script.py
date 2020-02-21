@@ -144,12 +144,15 @@ f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
 f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
+f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#ifndef INC_CONFIG_H_\n");
 f.write("#define INC_CONFIG_H_\n");
-f.write("\n");
-f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "\n")
-f.write("#define   SETTING_REGISTER_NUMBER      " + str(regNumber) + "\n")
-f.write("\n")
+f.write("/*----------------------- Includes -------------------------------------*/\n");
+f.write("#include \"stm32f2xx_hal.h\"\n")
+f.write("/*------------------------ Define --------------------------------------*/\n")
+f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "U\n")
+f.write("#define   SETTING_REGISTER_NUMBER      " + str(regNumber) + "U\n")
+f.write("/*----------------------- Structures -----------------------------------*/\n")
 f.write("typedef struct\n")
 f.write("{\n")
 f.write("  uint16_t  mask;\n")
@@ -172,9 +175,10 @@ f.write("  uint8_t          len;\n")
 f.write("  uint8_t          bitMapSize;\n")
 f.write("  eConfigBitMap*   bitMap;\n")
 f.write("} eConfigReg;\n")
-f.write("\n")
+f.write("/*------------------------- Extern -------------------------------------*/\n")
 for row in map:
     f.write("extern eConfigReg " + str(row.name) + ";\n")
+f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()
 #****** C ******
@@ -183,26 +187,25 @@ f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
 f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
-f.write("#include   <config.h>\n")
+f.write("#include   \"config.h\"\n")
 f.write("\n")
-postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = {"
+postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
 for row in map:
     if (row.bitMapSize > 0):
-        f.write("eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "] = \n")
+        f.write("eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
+        f.write("{\n")
         first = 0
         for bm in row.bit:
             first = first + 1
-            f.write("{ ")
-            f.write(str(bm["mask"]) + ", ")
-            f.write(str(bm["shift"]) + ", ")
-            f.write(str(bm["min"]) + ", ")
-            f.write(str(bm["max"]) + " ")
-            if (first < row.bitMapSize) :
-                f.write("},     // " + bm["name"] + "\n")
-            else:
-                f.write("};    // " + bm["name"] + "\n")
+            f.write("   { ")
+            f.write(str(bm["mask"]) + "U, ")
+            f.write(str(bm["shift"]) + "U, ")
+            f.write(str(bm["min"]) + "U, ")
+            f.write(str(bm["max"]) + "U ")
+            f.write("},     // " + bm["name"] + "\n")
+        f.write("};\n")
     f.write("eConfigReg " + row.name + " =\n")
-    postArray += row.name + ", "
+    postArray += "&" + row.name + ", "
     f.write("{\n")
     f.write("   .page       = " + str(row.page)  + "U,\n")
     f.write("   .adr        = " + str(row.adr)   + "U,\n")
@@ -213,7 +216,10 @@ for row in map:
     f.write("   .value      = " + str(int(row.value / row.scale)) + "U,\n")
     f.write("   .min        = " + str(int(row.min / row.scale))   + "U,\n")
     f.write("   .max        = " + str(int(row.max / row.scale))   + "U,\n")
-    f.write("   .units      = '"+     row.units  + "',\n")
+    if ( row.units == "" ):
+        f.write("   .units      = \" \",\n")
+    else:
+        f.write("   .units      = \""+     row.units  + "\",\n")
     f.write("   .type       = '"+     row.type   + "',\n")
     f.write("   .len        = " + str(row.len)   + "U,\n")
     if (row.bitMapSize > 0):

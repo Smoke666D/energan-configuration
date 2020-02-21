@@ -1,2 +1,3 @@
 python script.py
+pause
 

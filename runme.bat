@@ -1,2 +1,2 @@
 python script.py
-pause
+

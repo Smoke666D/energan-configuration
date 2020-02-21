@@ -102,14 +102,18 @@ for input in rawData:
                 map[-1].setAdr(curAdr)
                 curAdr = curAdr + 1
                 map[-1].setName(input["name"])
+                input["scale"] = input["scale"].replace(',','.')
                 map[-1].setScale(float(input["scale"]))
+                input["min"] = input["min"].replace(',','.')
                 map[-1].setMin(float(input["min"]))
+                input["max"] = input["max"].replace(',','.')
                 map[-1].setMax(float(input["max"]))
                 map[-1].setUnits(input["units"])
                 if (len(input["units"]) > maxUnitsLen):
                     maxUnitsLen = len(input["units"])
                 map[-1].setType(input["type"])
                 map[-1].setLen(int(input["length"]))
+                input["default"] = input["default"].replace(',','.')
                 map[-1].setValue(float(input["default"]))
             else:
                 regNumber = regNumber + 1
@@ -152,6 +156,23 @@ f.write("#include \"stm32f2xx_hal.h\"\n")
 f.write("/*------------------------ Define --------------------------------------*/\n")
 f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "U\n")
 f.write("#define   SETTING_REGISTER_NUMBER      " + str(regNumber) + "U\n")
+f.write("\n")
+f.write("#define   CONFIG_REG_PAGE_STR          \"page\"\n")
+f.write("#define   CONFIG_REG_ADR_STR           \"adr\"\n")
+f.write("#define   CONFIG_REG_SCALE_STR         \"scale\"\n")
+f.write("#define   CONFIG_REG_VALUE_STR         \"value\"\n")
+f.write("#define   CONFIG_REG_MIN_STR           \"min\"\n")
+f.write("#define   CONFIG_REG_MAX_STR           \"max\"\n")
+f.write("#define   CONFIG_REG_UNITS_STR         \"units\"\n")
+f.write("#define   CONFIG_REG_TYPE_STR          \"type\"\n")
+f.write("#define   CONFIG_REG_LEN_STR           \"len\"\n")
+f.write("#define   CONFIG_REG_BIT_MAP_SIZE_STR  \"bitMapSize\"\n")
+f.write("#define   CONFIG_REG_BIT_MAP_STR       \"bit\"\n")
+f.write("\n")
+f.write("#define   BIT_MAP_MASK_STR             \"mask\"\n")
+f.write("#define   BIT_MAP_SHIFT_STR            \"shift\"\n")
+f.write("#define   BIT_MAP_MIN_STR              \"min\"\n")
+f.write("#define   BIT_MAP_MAX_STR              \"max\"\n")
 f.write("/*----------------------- Structures -----------------------------------*/\n")
 f.write("typedef struct\n")
 f.write("{\n")
@@ -178,6 +199,7 @@ f.write("} eConfigReg;\n")
 f.write("/*------------------------- Extern -------------------------------------*/\n")
 for row in map:
     f.write("extern eConfigReg " + str(row.name) + ";\n")
+f.write("extern eConfigReg* configReg[SETTING_REGISTER_NUMBER];\n")
 f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()
@@ -189,10 +211,10 @@ f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
 f.write("#include   \"config.h\"\n")
 f.write("\n")
-postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
+postArray = "static eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
 for row in map:
     if (row.bitMapSize > 0):
-        f.write("eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
+        f.write("static eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
         f.write("{\n")
         first = 0
         for bm in row.bit:
@@ -204,7 +226,7 @@ for row in map:
             f.write(str(bm["max"]) + "U ")
             f.write("},     // " + bm["name"] + "\n")
         f.write("};\n")
-    f.write("eConfigReg " + row.name + " =\n")
+    f.write("static eConfigReg " + row.name + " =\n")
     postArray += "&" + row.name + ", "
     f.write("{\n")
     f.write("   .page       = " + str(row.page)  + "U,\n")
@@ -216,11 +238,19 @@ for row in map:
     f.write("   .value      = " + str(int(row.value / row.scale)) + "U,\n")
     f.write("   .min        = " + str(int(row.min / row.scale))   + "U,\n")
     f.write("   .max        = " + str(int(row.max / row.scale))   + "U,\n")
-    if ( row.units == "" ):
-        f.write("   .units      = \" \",\n")
-    else:
-        f.write("   .units      = \""+     row.units  + "\",\n")
-    f.write("   .type       = '"+     row.type   + "',\n")
+    f.write("   .units      = {");
+    i = 0;
+    l = list(row.units);
+    while i < maxUnitsLen:
+        if len(row.units) > i:
+            f.write("'" + l[i] + "'");
+        else:
+            f.write("' '");
+        if i != ( maxUnitsLen - 1 ):
+            f.write(", ");
+        i = i + 1;
+    f.write("},\n")
+    f.write("   .type       = '"+ row.type   + "',\n")
     f.write("   .len        = " + str(row.len)   + "U,\n")
     if (row.bitMapSize > 0):
         f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")

@@ -83,10 +83,10 @@ with open('config.csv') as file:
     for row in reader:
         rawData.append(row)
 # Parsing data to structure
-map     = []
-bitCnt  = 0
-curPage = 0
-curAdr  = 0
+map         = []
+bitCnt      = 0
+curPage     = 0
+curAdr      = 0
 maxUnitsLen = 0
 regNumber   = 0
 for input in rawData:
@@ -105,16 +105,16 @@ for input in rawData:
                 input["scale"] = input["scale"].replace(',','.')
                 map[-1].setScale(float(input["scale"]))
                 input["min"] = input["min"].replace(',','.')
-                map[-1].setMin(float(input["min"]))
+                map[-1].setMin(int(float(input["min"])/map[-1].scale))
                 input["max"] = input["max"].replace(',','.')
-                map[-1].setMax(float(input["max"]))
+                map[-1].setMax(int(float(input["max"])/map[-1].scale))
                 map[-1].setUnits(input["units"])
                 if (len(input["units"]) > maxUnitsLen):
                     maxUnitsLen = len(input["units"])
                 map[-1].setType(input["type"])
                 map[-1].setLen(int(input["length"]))
                 input["default"] = input["default"].replace(',','.')
-                map[-1].setValue(float(input["default"]))
+                map[-1].setValue(int(float(input["default"])/map[-1].scale))
             else:
                 regNumber = regNumber + 1
                 map[-1].bitMapSize = map[-1].bitMapSize + 1
@@ -235,9 +235,9 @@ for row in map:
         f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
     else:
         f.write("   .scale      = " + str(row.scale) + "F,\n")
-    f.write("   .value      = " + str(int(row.value / row.scale)) + "U,\n")
-    f.write("   .min        = " + str(int(row.min / row.scale))   + "U,\n")
-    f.write("   .max        = " + str(int(row.max / row.scale))   + "U,\n")
+    f.write("   .value      = " + str(row.value) + "U,\n")
+    f.write("   .min        = " + str(row.min)   + "U,\n")
+    f.write("   .max        = " + str(row.max)   + "U,\n")
     f.write("   .units      = {");
     i = 0;
     l = list(row.units);

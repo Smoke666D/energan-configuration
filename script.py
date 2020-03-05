@@ -4,6 +4,7 @@
 import csv
 import json
 from time import gmtime, strftime
+from math import log
 #*******************************************************************************
 #*******************************************************************************
 #*******************************************************************************
@@ -96,6 +97,7 @@ for input in rawData:
     else:
         if (input["name"] != "Reserved")and(input["name"][0] != "$"):
             if input["type"] != "B":
+                regNumber = regNumber + 1
                 bitCnt       = 0
                 map.append(register())
                 map[-1].setPage(curPage)
@@ -103,20 +105,24 @@ for input in rawData:
                 curAdr = curAdr + 1
                 map[-1].setName(input["name"])
                 input["scale"] = input["scale"].replace(',','.')
-                map[-1].setScale(float(input["scale"]))
+                scl = float(input["scale"])
+                sclPow = log( scl, 10 )
+                if (sclPow < 0):
+                    sclPow = sclPow - 1
+                sclPow = int(sclPow)
+                map[-1].setScale(sclPow)
                 input["min"] = input["min"].replace(',','.')
-                map[-1].setMin(int(float(input["min"])/map[-1].scale))
+                map[-1].setMin(int(float(input["min"])/scl))
                 input["max"] = input["max"].replace(',','.')
-                map[-1].setMax(int(float(input["max"])/map[-1].scale))
+                map[-1].setMax(int(float(input["max"])/scl))
                 map[-1].setUnits(input["units"])
                 if (len(input["units"]) > maxUnitsLen):
                     maxUnitsLen = len(input["units"])
                 map[-1].setType(input["type"])
                 map[-1].setLen(int(input["length"]))
                 input["default"] = input["default"].replace(',','.')
-                map[-1].setValue(int(float(input["default"])/map[-1].scale))
+                map[-1].setValue(int(float(input["default"])/scl))
             else:
-                regNumber = regNumber + 1
                 map[-1].bitMapSize = map[-1].bitMapSize + 1
                 map[-1].value   = int(map[-1].value)
                 bm = bitMap()
@@ -135,11 +141,13 @@ for input in rawData:
                 bitCnt = bitCnt + bl
                 map[-1].bit.append(bm.__dict__)
 print("Done!")
+#*******************************************************************************
 print ('********** Make JSON **********')
 with open('config.json', 'w') as f:
     for row in map:
         json_string = json.dump(row.__dict__, f, indent=4)
 print("Done!")
+#*******************************************************************************
 print ('****** Make Struct array ******')
 time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 #****** H ******
@@ -186,7 +194,7 @@ f.write("typedef struct\n")
 f.write("{\n")
 f.write("  uint16_t         page;\n")
 f.write("  uint16_t         adr;\n")
-f.write("  float            scale;\n")
+f.write("  signed char      scale;\n")
 f.write("  uint16_t         value;\n")
 f.write("  uint16_t         min;\n")
 f.write("  uint16_t         max;\n")
@@ -211,7 +219,7 @@ f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
 f.write("#include   \"config.h\"\n")
 f.write("\n")
-postArray = "static eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
+postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
 for row in map:
     if (row.bitMapSize > 0):
         f.write("static eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
@@ -226,15 +234,15 @@ for row in map:
             f.write(str(bm["max"]) + "U ")
             f.write("},     // " + bm["name"] + "\n")
         f.write("};\n")
-    f.write("static eConfigReg " + row.name + " =\n")
+    f.write("eConfigReg " + row.name + " =\n")
     postArray += "&" + row.name + ", "
     f.write("{\n")
     f.write("   .page       = " + str(row.page)  + "U,\n")
     f.write("   .adr        = " + str(row.adr)   + "U,\n")
-    if (row.scale >= 1):
+    if (row.scale >= 0):
         f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
     else:
-        f.write("   .scale      = " + str(row.scale) + "F,\n")
+        f.write("   .scale      = " + str(row.scale) + ",\n")
     f.write("   .value      = " + str(row.value) + "U,\n")
     f.write("   .min        = " + str(row.min)   + "U,\n")
     f.write("   .max        = " + str(row.max)   + "U,\n")

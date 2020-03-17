@@ -1,3 +1,2 @@
-python script.py
+python makeConfigs.py
 pause
-

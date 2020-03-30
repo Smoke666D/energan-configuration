@@ -5,6 +5,7 @@ import csv
 import json
 from time import gmtime, strftime
 from math import log
+import codecs
 #*******************************************************************************
 #*******************************************************************************
 #*******************************************************************************
@@ -27,6 +28,7 @@ class register(object):
         self.max     = 0xFFFF
         self.units   = ""
         self.type    = "U"
+        self.rw      = "rw"
         self.len     = 1
         self.bitMapSize = 0
         self.bit     = freeList[:]
@@ -57,6 +59,9 @@ class register(object):
     def setType(self, n):
         self.type = n
         return
+    def setRW(self, n):
+        self.rw = n
+        return;
     def setLen(self, n):
         self.len = n
         return
@@ -102,7 +107,6 @@ for input in rawData:
                 map.append(register())
                 map[-1].setPage(curPage)
                 map[-1].setAdr(curAdr)
-                curAdr = curAdr + 1
                 map[-1].setName(input["name"])
                 input["scale"] = input["scale"].replace(',','.')
                 scl = float(input["scale"])
@@ -120,6 +124,8 @@ for input in rawData:
                     maxUnitsLen = len(input["units"])
                 map[-1].setType(input["type"])
                 map[-1].setLen(int(input["length"]))
+                map[-1].setRW(input["rw"])
+                curAdr = curAdr + map[-1].len
                 input["default"] = input["default"].replace(',','.')
                 map[-1].setValue(int(float(input["default"])/scl))
             else:
@@ -143,6 +149,39 @@ for input in rawData:
 print("Done!")
 #*******************************************************************************
 print ('********** Make JSON **********')
+f = codecs.open("D:\PROJECTS\ENERGAN\web-face\js\config.js","w+", "utf-8")
+f.write("var dataReg = [\n")
+for row in map:
+    f.write('{\n')
+    f.write('   "page": ' + str(row.page) + ',\n')
+    f.write('   "adr": ' + str(row.adr) + ',\n')
+    f.write('   "name": "' + row.name + '",\n')
+    f.write('   "value": ' + str(row.value) + ',\n')
+    f.write('   "scale": ' + str(row.scale) + ',\n')
+    f.write('   "min": ' + str(row.min) + ',\n')
+    f.write('   "max": ' + str(row.max) + ',\n')
+    f.write('   "units": "' + row.units + '",\n')
+    f.write('   "type": "' + row.type + '",\n')
+    f.write('   "rw": "' + row.rw + '",\n')
+    f.write('   "len": ' + str(row.len) + ',\n')
+    f.write('   "bitMapSize": ' + str(row.bitMapSize)  + ',\n')
+    f.write('   "bit": ')
+    if (row.bitMapSize > 0):
+        f.write('[\n       ')
+        for bit in row.bit:
+            f.write('{\n')
+            f.write('           "name": "' + bit['name'] + '",\n')
+            f.write('           "mask": ' + str(bit['mask']) +  ',\n')
+            f.write('           "min": ' + str(bit['min']) + ',\n')
+            f.write('           "max": ' + str(bit['max']) + ',\n')
+            f.write('           "shift": ' + str(bit['shift']) + ',\n')
+            f.write('       },')
+        f.write('\n   ]\n')
+    else:
+        f.write('[]\n')
+    f.write('},')
+f.write('];')
+f.close()
 with open('config.json', 'w') as f:
     for row in map:
         json_string = json.dump(row.__dict__, f, indent=4)
@@ -151,7 +190,7 @@ print("Done!")
 print ('****** Make Struct array ******')
 time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 #****** H ******
-f = open("config.h","w+")
+f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
 f.write(" * Make time: " + time + "\n")
@@ -173,6 +212,7 @@ f.write("#define   CONFIG_REG_MIN_STR           \"min\"\n")
 f.write("#define   CONFIG_REG_MAX_STR           \"max\"\n")
 f.write("#define   CONFIG_REG_UNITS_STR         \"units\"\n")
 f.write("#define   CONFIG_REG_TYPE_STR          \"type\"\n")
+f.write("#define   CONFIG_REG_RW_STATUS         \"rw\"\n")
 f.write("#define   CONFIG_REG_LEN_STR           \"len\"\n")
 f.write("#define   CONFIG_REG_BIT_MAP_SIZE_STR  \"bitMapSize\"\n")
 f.write("#define   CONFIG_REG_BIT_MAP_STR       \"bit\"\n")
@@ -182,6 +222,11 @@ f.write("#define   BIT_MAP_SHIFT_STR            \"shift\"\n")
 f.write("#define   BIT_MAP_MIN_STR              \"min\"\n")
 f.write("#define   BIT_MAP_MAX_STR              \"max\"\n")
 f.write("/*----------------------- Structures -----------------------------------*/\n")
+f.write("typedef enum\n")
+f.write("{\n")
+f.write("  CONFIG_READ_ONLY,\n")
+f.write("  CONFIG_READ_WRITE,\n")
+f.write("} CONFIG_RW;\n\n")
 f.write("typedef struct\n")
 f.write("{\n")
 f.write("  uint16_t  mask;\n")
@@ -198,8 +243,9 @@ f.write("  signed char      scale;\n")
 f.write("  uint16_t         value;\n")
 f.write("  uint16_t         min;\n")
 f.write("  uint16_t         max;\n")
-f.write("  char             units[MAX_UNITS_LENGTH];\n")
-f.write("  char             type;\n")
+f.write("  uint16_t         units[MAX_UNITS_LENGTH];\n")
+f.write("  uint16_t         type;\n")
+f.write("  CONFIG_RW        rw;\n")
 f.write("  uint8_t          len;\n")
 f.write("  uint8_t          bitMapSize;\n")
 f.write("  eConfigBitMap*   bitMap;\n")
@@ -212,7 +258,7 @@ f.write("/*---------------------------------------------------------------------
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()
 #****** C ******
-f = open("config.c","w+")
+f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
 f.write(" * Make time: " + time + "\n")
@@ -245,6 +291,8 @@ for row in map:
         f.write("   .scale      = " + str(row.scale) + ",\n")
     f.write("   .value      = " + str(row.value) + "U,\n")
     f.write("   .min        = " + str(row.min)   + "U,\n")
+    if (row.max > 65535):
+        row.max = 65535
     f.write("   .max        = " + str(row.max)   + "U,\n")
     f.write("   .units      = {");
     i = 0;
@@ -259,6 +307,10 @@ for row in map:
         i = i + 1;
     f.write("},\n")
     f.write("   .type       = '"+ row.type   + "',\n")
+    if (row.rw == "r"):
+        f.write("   .rw         = CONFIG_READ_ONLY,\n")
+    else:
+        f.write("   .rw         = CONFIG_READ_WRITE,\n")
     f.write("   .len        = " + str(row.len)   + "U,\n")
     if (row.bitMapSize > 0):
         f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")

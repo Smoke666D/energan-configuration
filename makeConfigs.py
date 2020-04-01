@@ -156,7 +156,15 @@ for row in map:
     f.write('   "page": ' + str(row.page) + ',\n')
     f.write('   "adr": ' + str(row.adr) + ',\n')
     f.write('   "name": "' + row.name + '",\n')
-    f.write('   "value": ' + str(row.value) + ',\n')
+    if (row.len == 1):
+        f.write('   "value": ' + str(row.value) + ',\n')
+    else:
+        f.write('   "value": [');
+        for i in  range(0,row.len):
+            f.write(str((row.value >> 16*i) & 0xFFFF))
+            if i < (row.len-1):
+                f.write(", ")
+        f.write("],\n")
     f.write('   "scale": ' + str(row.scale) + ',\n')
     f.write('   "min": ' + str(row.min) + ',\n')
     f.write('   "max": ' + str(row.max) + ',\n')
@@ -240,7 +248,7 @@ f.write("{\n")
 f.write("  uint16_t         page;\n")
 f.write("  uint16_t         adr;\n")
 f.write("  signed char      scale;\n")
-f.write("  uint16_t         value;\n")
+f.write("  uint16_t*        value;\n")
 f.write("  uint16_t         min;\n")
 f.write("  uint16_t         max;\n")
 f.write("  uint16_t         units[MAX_UNITS_LENGTH];\n")
@@ -280,6 +288,12 @@ for row in map:
             f.write(str(bm["max"]) + "U ")
             f.write("},     // " + bm["name"] + "\n")
         f.write("};\n")
+    f.write("uint16_t " + row.name + "Value[" + str(row.len) + "U] = { ")
+    for i in range(0,row.len):
+        f.write(str((row.value >> 16*i) & 0xFFFF) + "U")
+        if i < (row.len-1):
+            f.write(", ")
+    f.write(" };\n")
     f.write("eConfigReg " + row.name + " =\n")
     postArray += "&" + row.name + ", "
     f.write("{\n")
@@ -289,7 +303,7 @@ for row in map:
         f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
     else:
         f.write("   .scale      = " + str(row.scale) + ",\n")
-    f.write("   .value      = " + str(row.value) + "U,\n")
+    f.write("   .value      = " + row.name + "Value,\n")
     f.write("   .min        = " + str(row.min)   + "U,\n")
     if (row.max > 65535):
         row.max = 65535
@@ -316,6 +330,7 @@ for row in map:
         f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
         f.write("   .bitMap     = " + row.name + "BitMap\n")
     f.write("};\n")
+    f.write("/*----------------------------------------------------------------*/\n")
 f.write("\n")
 postArray = postArray[:-1]
 postArray = postArray[:-1]

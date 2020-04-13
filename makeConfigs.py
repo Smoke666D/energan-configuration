@@ -125,7 +125,7 @@ for input in rawData:
                 map[-1].setType(input["type"])
                 map[-1].setLen(int(input["length"]))
                 map[-1].setRW(input["rw"])
-                curAdr = curAdr + map[-1].len
+                curAdr = curAdr +  1#map[-1].len
                 input["default"] = input["default"].replace(',','.')
                 map[-1].setValue(int(float(input["default"])/scl))
             else:
@@ -195,6 +195,10 @@ with open('config.json', 'w') as f:
         json_string = json.dump(row.__dict__, f, indent=4)
 print("Done!")
 #*******************************************************************************
+maxLen = 0;
+for row in map:
+    if row.len > maxLen:
+        maxLen = row.len
 print ('****** Make Struct array ******')
 time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 #****** H ******
@@ -211,6 +215,9 @@ f.write("#include \"stm32f2xx_hal.h\"\n")
 f.write("/*------------------------ Define --------------------------------------*/\n")
 f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "U\n")
 f.write("#define   SETTING_REGISTER_NUMBER      " + str(regNumber) + "U\n")
+f.write("#define   FILDS_TO_WRITE_NUMBER        3U\n")
+f.write("#define   BROADCAST_ADR                0xFFFFU\n")
+f.write("#define   MAX_VALUE_LENGTH             " + str(maxLen) + "U\n")
 f.write("\n")
 f.write("#define   CONFIG_REG_PAGE_STR          \"page\"\n")
 f.write("#define   CONFIG_REG_ADR_STR           \"adr\"\n")
@@ -235,6 +242,15 @@ f.write("{\n")
 f.write("  CONFIG_READ_ONLY,\n")
 f.write("  CONFIG_READ_WRITE,\n")
 f.write("} CONFIG_RW;\n\n")
+
+f.write("typedef enum\n")
+f.write("{\n")
+f.write("  CONFIG_NO    = 0x00U,\n")
+f.write("  CONFIG_VALUE = 0x01U,\n")
+f.write("  CONFIG_SCALE = 0x02U,\n")
+f.write("  CONFIG_UNITS = 0x03U,\n")
+f.write("} CONFIG_FILD;\n\n")
+
 f.write("typedef struct\n")
 f.write("{\n")
 f.write("  uint16_t  mask;\n")

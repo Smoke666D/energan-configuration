@@ -160,8 +160,11 @@ for row in map:
         f.write('   "value": ' + str(row.value) + ',\n')
     else:
         f.write('   "value": [');
-        for i in  range(0,row.len):
-            f.write(str((row.value >> 16*i) & 0xFFFF))
+        for i in range(0,row.len):
+            if row.type == 'S':
+                f.write( "' '" );
+            else:
+                f.write( str( ( row.value >> 16*i ) & 0xFFFF ) );
             if i < (row.len-1):
                 f.write(", ")
         f.write("],\n")
@@ -306,7 +309,10 @@ for row in map:
         f.write("};\n")
     f.write("uint16_t " + row.name + "Value[" + str(row.len) + "U] = { ")
     for i in range(0,row.len):
-        f.write(str((row.value >> 16*i) & 0xFFFF) + "U")
+        if row.type == 'S':
+            f.write("' '");
+        else:
+            f.write(str((row.value >> 16*i) & 0xFFFF) + "U");
         if i < (row.len-1):
             f.write(", ")
     f.write(" };\n")

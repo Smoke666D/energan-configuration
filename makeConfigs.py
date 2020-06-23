@@ -95,6 +95,7 @@ curPage     = 0
 curAdr      = 0
 maxUnitsLen = 0
 regNumber   = 0
+maxRegNumber = 0;
 for input in rawData:
     if input["name"][0] == "#":
         curPage = input["name"][1:]
@@ -102,8 +103,8 @@ for input in rawData:
     else:
         if (input["name"] != "Reserved")and(input["name"][0] != "$"):
             if input["type"] != "B":
-                regNumber = regNumber + 1
-                bitCnt       = 0
+                regNumber += 1;
+                bitCnt     = 0;
                 map.append(register())
                 map[-1].setPage(curPage)
                 map[-1].setAdr(curAdr)
@@ -111,7 +112,7 @@ for input in rawData:
                 input["scale"] = input["scale"].replace(',','.')
                 scl = float(input["scale"])
                 sclPow = log( scl, 10 )
-                if (sclPow < 0):
+                if ( sclPow < 0 ):
                     sclPow = sclPow - 1
                 sclPow = int(sclPow)
                 map[-1].setScale(sclPow)
@@ -120,8 +121,8 @@ for input in rawData:
                 input["max"] = input["max"].replace(',','.')
                 map[-1].setMax(int(float(input["max"])/scl))
                 map[-1].setUnits(input["units"])
-                if (len(input["units"]) > maxUnitsLen):
-                    maxUnitsLen = len(input["units"])
+                if ( len(input["units"] ) > maxUnitsLen):
+                    maxUnitsLen = len( input["units"] )
                 map[-1].setType(input["type"])
                 map[-1].setLen(int(input["length"]))
                 map[-1].setRW(input["rw"])
@@ -129,6 +130,8 @@ for input in rawData:
                 input["default"] = input["default"].replace(',','.')
                 map[-1].setValue(int(float(input["default"])/scl))
             else:
+                if ( maxRegNumber < regNumber ):
+                    maxRegNumber = regNumber;
                 map[-1].bitMapSize = map[-1].bitMapSize + 1
                 map[-1].value   = int(map[-1].value)
                 bm = bitMap()
@@ -204,7 +207,89 @@ for row in map:
         maxLen = row.len
 print ('****** Make Struct array ******')
 time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+#****** C ******
+totalSize = 0;
+f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
+f.write("/*\n")
+f.write(" * Configuration file from 'config.csv'\n")
+f.write(" * Make time: " + time + "\n")
+f.write(" */\n")
+f.write("#include   \"config.h\"\n")
+f.write("\n")
+postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
+maxValueLen = 0;
+for row in map:
+    if (row.bitMapSize > 0):
+        f.write("static eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
+        f.write("{\n")
+        first = 0
+        for bm in row.bit:
+            totalSize += 5;
+            first = first + 1
+            f.write("   { ")
+            f.write(str(bm["mask"]) + "U, ")
+            f.write(str(bm["shift"]) + "U, ")
+            f.write(str(bm["min"]) + "U, ")
+            f.write(str(bm["max"]) + "U ")
+            f.write("},     // " + bm["name"] + "\n")
+        f.write("};\n")
+    f.write("uint16_t " + row.name + "Value[" + str(row.len) + "U] = { ");
+    if ( row.len > maxValueLen ):
+        maxValueLen = row.len;
+    totalSize += 17;
+    for i in range(0,row.len):
+        totalSize += 2;
+        if row.type == 'S':
+            f.write("' '");
+        else:
+            f.write(str((row.value >> 16*i) & 0xFFFF) + "U");
+        if i < (row.len-1):
+            f.write(", ")
+    f.write(" };\n")
+    f.write("eConfigReg " + row.name + " =\n")
+    postArray += "&" + row.name + ", "
+    f.write("{\n")
+    f.write("   .page       = " + str(row.page)  + "U,\n")
+    f.write("   .adr        = " + str(row.adr)   + "U,\n")
+    if (row.scale >= 0):
+        f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
+    else:
+        f.write("   .scale      = " + str(row.scale) + ",\n")
+    f.write("   .value      = " + row.name + "Value,\n")
+    f.write("   .min        = " + str(row.min)   + "U,\n")
+    if (row.max > 65535):
+        row.max = 65535
+    f.write("   .max        = " + str(row.max)   + "U,\n")
+    f.write("   .units      = {");
+    i = 0;
+    l = list(row.units);
+    while i < maxUnitsLen:
+        if len(row.units) > i:
+            f.write("'" + l[i] + "'");
+        else:
+            f.write("' '");
+        if i != ( maxUnitsLen - 1 ):
+            f.write(", ");
+        i = i + 1;
+    f.write("},\n")
+    f.write("   .type       = '"+ row.type   + "',\n")
+    if (row.rw == "r"):
+        f.write("   .rw         = CONFIG_READ_ONLY,\n")
+    else:
+        f.write("   .rw         = CONFIG_READ_WRITE,\n")
+    f.write("   .len        = " + str(row.len)   + "U,\n")
+    if (row.bitMapSize > 0):
+        f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
+        f.write("   .bitMap     = " + row.name + "BitMap\n")
+    f.write("};\n")
+    f.write("/*----------------------------------------------------------------*/\n")
+f.write("\n")
+postArray = postArray[:-1]
+postArray = postArray[:-1]
+f.write(postArray + "};\n")
+f.close()
 #****** H ******
+maxConfigSize = maxUnitsLen*2 + 18 + maxRegNumber*4 + maxLen*2;
 f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
@@ -217,10 +302,12 @@ f.write("/*----------------------- Includes ------------------------------------
 f.write("#include \"stm32f2xx_hal.h\"\n")
 f.write("/*------------------------ Define --------------------------------------*/\n")
 f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "U\n")
-f.write("#define   SETTING_REGISTER_NUMBER      " + str(regNumber) + "U\n")
+f.write("#define   SETTING_REGISTER_NUMBER      " + str(maxRegNumber) + "U\n")
 f.write("#define   FILDS_TO_WRITE_NUMBER        3U\n")
 f.write("#define   BROADCAST_ADR                0xFFFFU\n")
-f.write("#define   MAX_VALUE_LENGTH             " + str(maxLen) + "U\n")
+f.write("#define   MAX_VALUE_LENGTH             " + str( maxLen ) + "U\n" )
+f.write("#define   CONFIG_MAX_SIZE              " + str( maxConfigSize ) + "U\n" );
+f.write("#define   CONFIG_TOTAL_SIZE            " + str( int(totalSize/1024) + 1 ) + "U\n" );
 f.write("\n")
 f.write("#define   CONFIG_REG_PAGE_STR          \"page\"\n")
 f.write("#define   CONFIG_REG_ADR_STR           \"adr\"\n")
@@ -284,79 +371,5 @@ f.write("extern eConfigReg* configReg[SETTING_REGISTER_NUMBER];\n")
 f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()
-#****** C ******
-f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
-f.write("/*\n")
-f.write(" * Configuration file from 'config.csv'\n")
-f.write(" * Make time: " + time + "\n")
-f.write(" */\n")
-f.write("#include   \"config.h\"\n")
-f.write("\n")
-postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
-for row in map:
-    if (row.bitMapSize > 0):
-        f.write("static eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
-        f.write("{\n")
-        first = 0
-        for bm in row.bit:
-            first = first + 1
-            f.write("   { ")
-            f.write(str(bm["mask"]) + "U, ")
-            f.write(str(bm["shift"]) + "U, ")
-            f.write(str(bm["min"]) + "U, ")
-            f.write(str(bm["max"]) + "U ")
-            f.write("},     // " + bm["name"] + "\n")
-        f.write("};\n")
-    f.write("uint16_t " + row.name + "Value[" + str(row.len) + "U] = { ")
-    for i in range(0,row.len):
-        if row.type == 'S':
-            f.write("' '");
-        else:
-            f.write(str((row.value >> 16*i) & 0xFFFF) + "U");
-        if i < (row.len-1):
-            f.write(", ")
-    f.write(" };\n")
-    f.write("eConfigReg " + row.name + " =\n")
-    postArray += "&" + row.name + ", "
-    f.write("{\n")
-    f.write("   .page       = " + str(row.page)  + "U,\n")
-    f.write("   .adr        = " + str(row.adr)   + "U,\n")
-    if (row.scale >= 0):
-        f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
-    else:
-        f.write("   .scale      = " + str(row.scale) + ",\n")
-    f.write("   .value      = " + row.name + "Value,\n")
-    f.write("   .min        = " + str(row.min)   + "U,\n")
-    if (row.max > 65535):
-        row.max = 65535
-    f.write("   .max        = " + str(row.max)   + "U,\n")
-    f.write("   .units      = {");
-    i = 0;
-    l = list(row.units);
-    while i < maxUnitsLen:
-        if len(row.units) > i:
-            f.write("'" + l[i] + "'");
-        else:
-            f.write("' '");
-        if i != ( maxUnitsLen - 1 ):
-            f.write(", ");
-        i = i + 1;
-    f.write("},\n")
-    f.write("   .type       = '"+ row.type   + "',\n")
-    if (row.rw == "r"):
-        f.write("   .rw         = CONFIG_READ_ONLY,\n")
-    else:
-        f.write("   .rw         = CONFIG_READ_WRITE,\n")
-    f.write("   .len        = " + str(row.len)   + "U,\n")
-    if (row.bitMapSize > 0):
-        f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
-        f.write("   .bitMap     = " + row.name + "BitMap\n")
-    f.write("};\n")
-    f.write("/*----------------------------------------------------------------*/\n")
-f.write("\n")
-postArray = postArray[:-1]
-postArray = postArray[:-1]
-f.write(postArray + "};\n")
-
-
-f.close()
+#******************************************************************************
+print("Done! Total size: " + str( totalSize ) );

@@ -41,7 +41,7 @@ fuelLevelLowPreAlarmEnb;0;1;1;;B;1;0;rw
 fuelLevelHightPreAlarmEnb;0;1;1;;B;1;0;rw
 fuelLevelHightAlarmEnb;0;1;1;;B;1;1;rw
 fuelLevelHightAlarmAction;0;1;1;;B;1;0;rw
-fuelPumpEnb;0;1;1;;B;1;1;rw
+fuelPumpEnb;0;1;1;;B;0;1;rw
 fuelLevelLowAlarmLevel;0;95;1;%;U;1;10;rw
 fuelLevelLowAlarmDelay;0;3600;1;сек;U;1;100;rw
 fuelLevelLowPreAlarmLevel;1;96;1;%;U;1;25;rw
@@ -53,6 +53,13 @@ fuelLevelHightAlarmDelay;0;3600;1;сек;U;1;0;rw
 fuelPumpOnLevel;0;100;1;%;U;1;30;rw
 fuelPumpOffLevel;0;100;1;%;U;1;70;rw
 $5;;;;;;;;
+speedSetup;0;1023;1;;U;1;0;rw
+speedEnb;0;1;1;;B;1;0;rw
+speedLowAlarmEnb;0;1;1;;B;1;0;rw
+speedToothNumber;10;500;1;;U;1;190;rw
+speedLowAlarmLevel;0;6000;1;RPM;U;1;1200;rw
+speedHightAlarmLevel;0;6000;1;RPM;U;1;1710;rw
+$6;;;;;;;;
 diaSetup;0;1023;1;;U;1;0;rw
 diaFunction;0;27;1;;B;5;14;rw
 diaPolarity;0;1;1;;B;1;0;rw
@@ -60,7 +67,7 @@ diaAction;0;3;1;;B;2;0;rw
 diaArming;0;4;1;;B;2;0;rw
 diaDelay;0;60;1;сек;U;1;15;rw
 diaMessage;0;0;1;;S;16;0;rw
-$6;;;;;;;;
+$7;;;;;;;;
 dibSetup;0;1023;1;;U;1;0;rw
 dibFunction;0;27;1;;B;5;0;rw
 dibPolarity;0;1;1;;B;1;0;rw
@@ -68,7 +75,7 @@ dibAction;0;3;1;;B;2;0;rw
 dibArming;0;4;1;;B;2;0;rw
 dibDelay;0;60;1;сек;U;1;15;rw
 dibMessage;0;0;1;;S;16;0;rw
-$7;;;;;;;;
+$8;;;;;;;;
 dicSetup;0;1023;1;;U;1;0;rw
 dicFunction;0;27;1;;B;5;0;rw
 dicPolarity;0;1;1;;B;1;0;rw
@@ -76,7 +83,7 @@ dicAction;0;3;1;;B;2;0;rw
 dicArming;0;4;1;;B;2;0;rw
 dicDelay;0;60;1;сек;U;1;15;rw
 dicMessage;0;0;1;;S;16;0;rw
-$8;;;;;;;;
+$9;;;;;;;;
 didSetup;0;1023;1;;U;1;0;rw
 didFunction;0;27;1;;B;5;0;rw
 didPolarity;0;1;1;;B;1;0;rw
@@ -84,7 +91,7 @@ didAction;0;3;1;;B;2;1;rw
 didArming;0;4;1;;B;2;0;rw
 didDelay;0;60;1;сек;U;1;15;rw
 didMessage;0;0;1;;S;16;0;rw
-$9;;;;;;;;
+$10;;;;;;;;
 doSetup;0;1023;1;;U;1;0;rw
 doaNOC;0;1;1;;B;1;0;rw
 dobNOC;0;1;1;;B;1;0;rw
@@ -101,7 +108,7 @@ dodType;0;255;1;;B;8;0;rw
 doefType;0;1023;1;;U;1;0;rw
 doeType;0;255;1;;B;8;0;rw
 dofType;0;255;1;;B;8;0;rw
-$10:1;;;;;;;;
+$11:1;;;;;;;;
 timerMainsTransientDelay;0,1;10;0,1;сек;U;1;0,1;rw
 timerStartDelay;0;300;1;сек;U;1;5;rw
 timerPreheating;0;300;1;сек;U;1;5;rw
@@ -111,7 +118,7 @@ timerStartupIdleTime;0;300;1;сек;U;1;10;rw
 timerNominalRPMDelay;1;30;1;сек;U;1;10;rw
 timerSafetyOnDelay;1;60;1;сек;U;1;10;rw
 timerWarming;0;300;1;сек;U;1;1;rw
-$10:2;;;;;;;;
+$11:2;;;;;;;;
 timerTransferDelay;0.1;30;0.1;сек;U;1;0.7;rw
 timerBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw
 timerBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw
@@ -121,9 +128,9 @@ timerCoolingIdle;0;300;1;сек;U;1;20;rw
 timerSolenoidHold;0;60;1;сек;U;1;20;rw
 timerFailStopDelay;1;60;1;сек;U;1;30;rw
 timerGenTransientDelay;0.1;10;0.1;сек;U;1;1;rw
-$11;;;;;;;;
+$12;;;;;;;;
 genSetup;0;255;1;;U;1;0;rw
-genPowerGeneratorControlEnb;0;1;1;;B;1;0;rw
+genPowerGeneratorControlEnb;0;1;1;;B;1;1;rw
 genPoles;0;16;1;;B;4;4;rw
 genAcSys;0;5;1;;B;3;3;rw
 genLocationCurrentTransformer;0;1;1;;B;1;0;rw
@@ -133,7 +140,7 @@ genRatedApparentPowerLevel;0;10000;1;кВА;U;1;200;rw
 genRatedFrequencyLevel;0.3;74.7;0.1;Гц;U;1;50;rw
 genCurrentPrimaryLevel;5;8000;1;А;U;1;600;rw
 genCurrentFullLoadRatingLevel;5;8000;1;А;U;1;500;rw
-$12 Напряжение генератора;;;;;;;;
+$13 Напряжение генератора;;;;;;;;
 genAlarms;0;65535;1;;U;1;0;rw
 genUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw
 genUnderVoltagePreAlarmEnb;0;1;1;;B;1;1;rw
@@ -163,12 +170,12 @@ genCurrentOverloadProtectionLevel;1;125;1;%;U;1;100;rw
 genCurrentOverloadProtectionDelay;0;3600;1;сек;U;1;5;rw
 genCurrentOverPhaseImbalanceLevel;1;125;1;%;U;1;100;rw
 genCurrentOverPhaseImbalanceDelay;0;3600;1;сек;U;1;60;rw
-$13;;;;;;;;
+$14;;;;;;;;
 mainsSetup;0;31;1;;U;1;0;rw
 mainsControlEnb;0;1;1;;B;1;1;rw
 mainsPowerOffImmediatelyEnb;0;1;1;;B;1;0;rw
 mainAcSys;0;5;1;;B;3;3;rw
-$14;;;;;;;;
+$15;;;;;;;;
 mainsAlarms;0;15;1;;U;1;0;rw
 mainsUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw
 mainsOverVoltageAlarmEnb;0;1;1;;B;1;1;rw
@@ -178,7 +185,7 @@ mainsUnderVoltageAlarmLevel;86;713;1;В;U;1;318;rw
 mainsOverVoltageAlarmLevel;90;717;1;В;U;1;438;rw
 mainsUnderFrequencyAlarmLevel;0;74.7;0.1;Гц;U;1;45;rw
 mainsOverFrequencyAlarmLevel;0.2;74.9;0.1;Гц;U;1;52;rw
-$15;;;;;;;;
+$16;;;;;;;;
 engineSetup;0;63;1;;U;1;0;rw
 engineStartAttempts;1;9;1;;B;4;3;rw
 enginePreHeatEnb;0;1;1;;B;1;1;rw
@@ -187,7 +194,7 @@ enginePreHeatLevel;0;100;1;C;U;1;50;rw
 enginePreHeatDelay;0;3600;1;сек;U;1;0;rw
 enginePostHeatLevel;0;100;1;C;U;1;50;rw
 enginePostHeatDelay;0;3600;1;сек;U;1;0;rw
-$16;;;;;;;;
+$17;;;;;;;;
 crankSetup;0;7;1;;U;1;0;rw
 crankDisconnectOilPressureEnb;0;1;1;;B;1;0;rw
 crankOilPressureCheckOnStartEnb;0;1;1;;B;1;1;rw
@@ -196,7 +203,7 @@ crankDisconnectChargeAlternatorEnb;0;1;1;;B;1;1;rw
 crankDisconnectgenFreqLevel;0;40;0.1;Гц;U;1;21;rw
 crankDisconnectOilPressureLevel;0.5;4;0.1;Бар;U;1;2;rw
 crankDisconnectChargeAlternatorLevel;0;40;0.1;В;U;1;6;rw
-$17;;;;;;;;
+$18;;;;;;;;
 batteryAlarms;0;15;1;;U;1;0;rw
 batteryUnderVoltageEnb;0;1;1;;B;1;1;rw
 batteryOverVoltageEnb;0;1;1;;B;1;1;rw
@@ -210,7 +217,7 @@ batteryChargeShutdownLevel;0;38.9;0.1;В;U;1;4;rw
 batteryChargeShutdownDelay;0;3600;1;сек;U;1;5;rw
 batteryChargeWarningLevel;0.1;39;0.1;В;U;1;6;rw
 batteryChargeWarningDelay;0;3600;1;сек;U;1;5;rw
-$18;;;;;;;;
+$19;;;;;;;;
 maintenanceAlarms;0;63;1;;U;1;0;rw
 maintenanceAlarmOilEnb;0;1;1;;B;1;0;rw
 maintenanceAlarmOilAction;0;1;1;;B;1;1;rw

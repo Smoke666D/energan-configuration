@@ -161,8 +161,18 @@ for row in map:
     f.write('   "name": "' + row.name + '",\n')
     if (row.len == 1):
         f.write('   "value": ' + str(row.value) + ',\n')
+        f.write('   "default": ' + str(row.value) + ',\n')
     else:
         f.write('   "value": [');
+        for i in range(0,row.len):
+            if row.type == 'S':
+                f.write( "' '" );
+            else:
+                f.write( str( ( row.value >> 16*i ) & 0xFFFF ) );
+            if i < (row.len-1):
+                f.write(", ")
+        f.write("],\n")
+        f.write('   "default": [');
         for i in range(0,row.len):
             if row.type == 'S':
                 f.write( "' '" );

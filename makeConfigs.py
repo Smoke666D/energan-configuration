@@ -152,7 +152,7 @@ for input in rawData:
 print("Done!")
 #*******************************************************************************
 print ('********** Make JSON **********')
-f = codecs.open("D:\PROJECTS\ENERGAN\web-face\js\config.js","w+", "utf-8")
+f = codecs.open("C:\PROJECTS\ENERGAN\web-face\js\config.js","w+", "utf-8")
 f.write("var dataReg = [\n")
 for row in map:
     f.write('{\n')
@@ -219,7 +219,7 @@ print ('****** Make Struct array ******')
 time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 #****** C ******
 totalSize = 0;
-f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
+f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
 f.write(" * Make time: " + time + "\n")
@@ -300,7 +300,7 @@ f.write(postArray + "};\n")
 f.close()
 #****** H ******
 maxConfigSize = maxUnitsLen*2 + 18 + maxRegNumber*4 + maxLen*2;
-f = codecs.open("D:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
+f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
 f.write(" * Make time: " + time + "\n")

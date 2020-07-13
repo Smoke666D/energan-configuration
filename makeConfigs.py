@@ -101,34 +101,36 @@ for input in rawData:
         curPage = input["name"][1:]
         curAdr  = 0
     else:
-        if (input["name"] != "Reserved")and(input["name"][0] != "$"):
+        if ( input["name"] != "Reserved")and(input["name"][0] != "$"):
             if input["type"] != "B":
                 regNumber += 1;
                 bitCnt     = 0;
-                map.append(register())
-                map[-1].setPage(curPage)
-                map[-1].setAdr(curAdr)
-                map[-1].setName(input["name"])
-                input["scale"] = input["scale"].replace(',','.')
-                scl = float(input["scale"])
-                sclPow = log( scl, 10 )
+                map.append( register() );
+                map[-1].setPage( curPage );
+                map[-1].setAdr( curAdr );
+                map[-1].setName( input["name"] );
+                input["scale"] = input["scale"].replace( ',', '.' );
+                scl = float( input["scale"] );
+                sclPow = log( scl, 10 );
                 if ( sclPow < 0 ):
-                    sclPow = sclPow - 1
-                sclPow = int(sclPow)
-                map[-1].setScale(sclPow)
-                input["min"] = input["min"].replace(',','.')
-                map[-1].setMin(int(float(input["min"])/scl))
-                input["max"] = input["max"].replace(',','.')
-                map[-1].setMax(int(float(input["max"])/scl))
-                map[-1].setUnits(input["units"])
-                if ( len(input["units"] ) > maxUnitsLen):
-                    maxUnitsLen = len( input["units"] )
-                map[-1].setType(input["type"])
-                map[-1].setLen(int(input["length"]))
-                map[-1].setRW(input["rw"])
-                curAdr = curAdr +  1#map[-1].len
-                input["default"] = input["default"].replace(',','.')
-                map[-1].setValue(int(float(input["default"])/scl))
+                    sclPow = sclPow - 1;
+                sclPow = int( sclPow );
+                map[-1].setScale( sclPow );
+                input["min"] = input["min"].replace( ',', '.' );
+                map[-1].setMin( int( float( input["min"] ) / scl ) );
+                input["max"] = input["max"].replace( ',', '.' );
+                map[-1].setMax( int( float( input["max"] ) / scl ) );
+                map[-1].setUnits( input["units"] );
+                if ( len( input["units"] ) > maxUnitsLen ):
+                    maxUnitsLen = len( input["units"] );
+                map[-1].setType( input["type"] );
+                map[-1].setLen( int( input["length"] ) );
+                map[-1].setRW( input["rw"] )
+                curAdr = curAdr +  1;#map[-1].len
+                input["default"] = input["default"].replace( ',', '.' );
+                map[-1].setValue( int( float( input["default"] ) / scl ) );
+                #if input["name"] == 'oilPressureAlarmLevel':
+                #    print( str( map[-1].scale ) )
             else:
                 if ( maxRegNumber < regNumber ):
                     maxRegNumber = regNumber;

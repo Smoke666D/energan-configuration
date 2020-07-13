@@ -12,12 +12,12 @@ moduleType;0;1;1;;B;1;1;rw
 alarmAllBlock;0;1;1;;B;1;1;rw
 $2;;;;;;;;
 oilPressureSetup;0;63;1;;U;1;0;rw
-oilPressureSensorType;0;11;1;;B;4;2;rw
+oilPressureSensorType;0;11;1;;B;4;3;rw
 oilPressureOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw
 oilPressureAlarmEnb;0;1;1;;B;1;1;rw
 oilPressurePreAlarmEnb;0;1;1;;B;1;0;rw
-oilPressureAlarmLevel;0;10,3;0,1;Бар;U;1;1,3;rw
-oilPressurePreAlarmLevel;0;10,3;0,1;Бар;U;1;0,5;rw
+oilPressureAlarmLevel;0;10,3;0.01;Бар;U;1;1,03;rw
+oilPressurePreAlarmLevel;0;10,3;0.01;Бар;U;1;1,24;rw
 $3;;;;;;;;
 coolantTempSetup;0;63;1;;U;1;0;rw
 coolantTempSensorType;0;11;1;;B;4;3;rw
@@ -34,7 +34,8 @@ coolantTempCoolerOffLevel;0;250;1;C;U;1;120;rw
 coolantTempCoolerOnLevel;0;250;1;C;U;1;80;rw
 $4;;;;;;;;
 fuelLevelSetup;0;1023;1;;U;1;0;rw
-fuelLevelSensorType;0;5;1;;B;3;1;rw
+fuelLevelSensorType;0;5;1;;B;3;3;rw
+fuelLevelOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw
 fuelLevelLowAlarmEnb;0;1;1;;B;1;1;rw
 fuelLevelLowAlarmAction;0;1;1;;B;1;1;rw
 fuelLevelLowPreAlarmEnb;0;1;1;;B;1;0;rw

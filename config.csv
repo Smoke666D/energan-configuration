@@ -6,6 +6,7 @@ serialNumber;0;0;1;;U;6;0;r
 displayBrightnesLevel;0;100;1;%;U;1;50;rw
 displayContarstLevel;0;100;1;%;U;1;30;rw
 displaySleepDelay;2;600;1;сек;U;1;10;rw
+hysteresisLevel;0;100;0.1;%;U;1;2;rw
 $1;;;;;;;;
 moduleSetup;0;3;1;;U;1;0;rw
 moduleType;0;1;1;;B;1;1;rw
@@ -131,9 +132,7 @@ timerGenTransientDelay;0.1;10;0.1;сек;U;1;1;rw
 $12;;;;;;;;
 genSetup;0;255;1;;U;1;0;rw
 genPowerGeneratorControlEnb;0;1;1;;B;1;1;rw
-genPoles;0;16;1;;B;4;4;rw
-genAcSys;0;5;1;;B;3;3;rw
-genLocationCurrentTransformer;0;1;1;;B;1;0;rw
+genAcSys;0;3;1;;B;2;0;rw
 genRatedActivePowerLevel;0;10000;1;к¬т;U;1;40000;rw
 genRatedReactivePowerLevel;0;10000;1;к¬ј–;U;1;0;rw
 genRatedApparentPowerLevel;0;10000;1;к¬ј;U;1;200;rw
@@ -174,7 +173,6 @@ $14;;;;;;;;
 mainsSetup;0;31;1;;U;1;0;rw
 mainsControlEnb;0;1;1;;B;1;1;rw
 mainsPowerOffImmediatelyEnb;0;1;1;;B;1;0;rw
-mainAcSys;0;5;1;;B;3;3;rw
 $15;;;;;;;;
 mainsAlarms;0;15;1;;U;1;0;rw
 mainsUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw

@@ -63,7 +63,7 @@ speedLowAlarmLevel;0;6000;1;RPM;U;1;1200;rw
 speedHightAlarmLevel;0;6000;1;RPM;U;1;1710;rw
 $6;;;;;;;;
 diaSetup;0;1023;1;;U;1;0;rw
-diaFunction;0;27;1;;B;5;14;rw
+diaFunction;0;27;1;;B;5;0;rw
 diaPolarity;0;1;1;;B;1;0;rw
 diaAction;0;3;1;;B;2;0;rw
 diaArming;0;4;1;;B;2;0;rw
@@ -121,8 +121,10 @@ timerSafetyOnDelay;1;60;1;сек;U;1;10;rw
 timerWarming;0;300;1;сек;U;1;1;rw
 $11:2;;;;;;;;
 timerTransferDelay;0.1;30;0.1;сек;U;1;0.7;rw
-timerBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw
-timerBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw
+timerGenBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw
+timerGenBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw
+timerMainsBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw
+timerMainsBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw
 timerReturnDelay;0;300;1;сек;U;1;30;rw
 timerCooling;0;300;1;сек;U;1;60;rw
 timerCoolingIdle;0;300;1;сек;U;1;20;rw
@@ -161,8 +163,8 @@ genUnderFrequencyAlarmLevel;0;74.4;0.1;√ц;U;1;40;rw
 genUnderFrequencyPreAlarmLevel;0.1;74.5;0.1;√ц;U;1;42;rw
 genOverFrequencyPreAlarmLevel;0.4;74.8;0.1;√ц;U;1;54;rw
 genOverFrequencyAlarmLevel;0.5;74.9;0.1;√ц;U;1;55;rw
-genOverCurrentThermalProtectionLevel;0;120;1;%;U;1;20;rw
-genOverCurrentCutoffLevel;0;120;1;%;U;1;40;rw
+genOverCurrentThermalProtectionLevel;90;200;1;%;U;1;20;rw
+genOverCurrentCutoffLevel;200;500;1;%;U;1;40;rw
 genOverCurrentAlarmLevel;50;120;1;%;U;1;100;rw
 genOverCurrentAlarmDelay;0;3600;1;сек;U;1;60;rw
 genCurrentOverloadProtectionLevel;1;125;1;%;U;1;100;rw
@@ -186,7 +188,7 @@ mainsOverFrequencyAlarmLevel;0.2;74.9;0.1;√ц;U;1;52;rw
 $16;;;;;;;;
 engineSetup;0;63;1;;U;1;0;rw
 engineStartAttempts;1;9;1;;B;4;3;rw
-enginePreHeatEnb;0;1;1;;B;1;1;rw
+enginePreHeatEnb;0;1;1;;B;1;0;rw
 enginePreHeatLevel;0;100;1;C;U;1;50;rw
 enginePreHeatDelay;0;3600;1;сек;U;1;0;rw
 engineWorkTimeInput;0;65535;1;час;U;1;0;rw

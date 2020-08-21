@@ -19,7 +19,6 @@ class bitMap:
 
 class register(object):
     def __init__(self):
-        self.page    = 0
         self.adr     = 0
         self.name    = ""
         self.value   = 0
@@ -32,9 +31,6 @@ class register(object):
         self.len     = 1
         self.bitMapSize = 0
         self.bit     = freeList[:]
-    def setPage(self, n):
-        self.page = n
-        return
     def setAdr(self, n):
         self.adr = n
         return
@@ -91,14 +87,12 @@ with open('config.csv') as file:
 # Parsing data to structure
 map         = []
 bitCnt      = 0
-curPage     = 0
 curAdr      = 0
 maxUnitsLen = 0
 regNumber   = 0
 maxRegNumber = 0;
 for input in rawData:
     if input["name"][0] == "#":
-        curPage = input["name"][1:]
         curAdr  = 0
     else:
         if ( input["name"] != "Reserved")and(input["name"][0] != "$"):
@@ -106,7 +100,6 @@ for input in rawData:
                 regNumber += 1;
                 bitCnt     = 0;
                 map.append( register() );
-                map[-1].setPage( curPage );
                 map[-1].setAdr( curAdr );
                 map[-1].setName( input["name"] );
                 input["scale"] = input["scale"].replace( ',', '.' );
@@ -158,7 +151,6 @@ f = codecs.open("C:\PROJECTS\ENERGAN\web-face\js\config.js","w+", "utf-8")
 f.write("var dataReg = [\n")
 for row in map:
     f.write('{\n')
-    f.write('   "page": ' + str(row.page) + ',\n')
     f.write('   "adr": ' + str(row.adr) + ',\n')
     f.write('   "name": "' + row.name + '",\n')
     if (row.len == 1):
@@ -214,11 +206,13 @@ with open('config.json', 'w') as f:
 print("Done!")
 #*******************************************************************************
 maxLen = 0;
+maxBitMapSize = 0;
 for row in map:
     if row.len > maxLen:
         maxLen = row.len
 print ('****** Make Struct array ******')
-time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+time = strftime( "%Y-%m-%d %H:%M:%S", gmtime() );
+configStorageSize = 0;
 #****** C ******
 totalSize = 0;
 f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
@@ -240,11 +234,11 @@ for row in map:
             first = first + 1
             f.write("   { ")
             f.write(str(bm["mask"]) + "U, ")
-            f.write(str(bm["shift"]) + "U, ")
-            f.write(str(bm["min"]) + "U, ")
-            f.write(str(bm["max"]) + "U ")
+            f.write(str(bm["shift"]) + "U ")
             f.write("},     // " + bm["name"] + "\n")
         f.write("};\n")
+    if (row.rw == "r"):
+        f.write("const ")
     f.write("uint16_t " + row.name + "Value[" + str(row.len) + "U] = { ");
     if ( row.len > maxValueLen ):
         maxValueLen = row.len;
@@ -258,20 +252,33 @@ for row in map:
         if i < (row.len-1):
             f.write(", ")
     f.write(" };\n")
+
+    f.write("const eConfigAttributes " + row.name + "Atrib =\n{\n" );
+    f.write("   .adr        = " + str(row.adr)   + "U,\n")
+    f.write("   .min        = " + str(row.min)   + "U,\n")
+    if (row.max > 65535):
+        row.max = 65535
+    f.write("   .max        = " + str(row.max)   + "U,\n")
+    f.write("   .type       = '"+ row.type   + "',\n")
+    f.write("   .len        = " + str(row.len)   + "U,\n")
+    f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
+
+    if (row.rw != "r"):
+        configStorageSize += ( row.bitMapSize * 3 ) + ( row.len * 2 ) + ( maxUnitsLen * 2 );
+
+    f.write("};\n");
+
+    if (row.rw == "r"):
+        f.write("const ")
     f.write("eConfigReg " + row.name + " =\n")
     postArray += "&" + row.name + ", "
     f.write("{\n")
-    f.write("   .page       = " + str(row.page)  + "U,\n")
-    f.write("   .adr        = " + str(row.adr)   + "U,\n")
+    f.write("   .atrib      = &" + row.name + "Atrib,\n");
     if (row.scale >= 0):
         f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
     else:
         f.write("   .scale      = " + str(row.scale) + ",\n")
     f.write("   .value      = " + row.name + "Value,\n")
-    f.write("   .min        = " + str(row.min)   + "U,\n")
-    if (row.max > 65535):
-        row.max = 65535
-    f.write("   .max        = " + str(row.max)   + "U,\n")
     f.write("   .units      = {");
     i = 0;
     l = list(row.units);
@@ -284,15 +291,12 @@ for row in map:
             f.write(", ");
         i = i + 1;
     f.write("},\n")
-    f.write("   .type       = '"+ row.type   + "',\n")
-    if (row.rw == "r"):
-        f.write("   .rw         = CONFIG_READ_ONLY,\n")
-    else:
-        f.write("   .rw         = CONFIG_READ_WRITE,\n")
-    f.write("   .len        = " + str(row.len)   + "U,\n")
-    if (row.bitMapSize > 0):
-        f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
+    if ( row.bitMapSize > 0 ):
+        if ( row.bitMapSize > maxBitMapSize ):
+            maxBitMapSize = row.bitMapSize;
         f.write("   .bitMap     = " + row.name + "BitMap\n")
+    else:
+        f.write("   .bitMap     = NULL\n")
     f.write("};\n")
     f.write("/*----------------------------------------------------------------*/\n")
 f.write("\n")
@@ -301,7 +305,7 @@ postArray = postArray[:-1]
 f.write(postArray + "};\n")
 f.close()
 #****** H ******
-maxConfigSize = maxUnitsLen*2 + 18 + maxRegNumber*4 + maxLen*2;
+maxConfigSize = maxUnitsLen*2 + 1 + maxLen*2 + maxBitMapSize*3;
 f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
@@ -318,10 +322,9 @@ f.write("#define   SETTING_REGISTER_NUMBER      " + str(maxRegNumber) + "U\n")
 f.write("#define   FILDS_TO_WRITE_NUMBER        3U\n")
 f.write("#define   BROADCAST_ADR                0xFFFFU\n")
 f.write("#define   MAX_VALUE_LENGTH             " + str( maxLen ) + "U\n" )
-f.write("#define   CONFIG_MAX_SIZE              " + str( maxConfigSize ) + "U\n" );
-f.write("#define   CONFIG_TOTAL_SIZE            " + str( int(totalSize/1024) + 1 ) + "U\n" );
+f.write("#define   CONFIG_MAX_SIZE              " + str( maxConfigSize ) + "U     // bytes\n" );
+f.write("#define   CONFIG_TOTAL_SIZE            " + str( configStorageSize ) + "U   // bytes\n" );
 f.write("\n")
-f.write("#define   CONFIG_REG_PAGE_STR          \"page\"\n")
 f.write("#define   CONFIG_REG_ADR_STR           \"adr\"\n")
 f.write("#define   CONFIG_REG_SCALE_STR         \"scale\"\n")
 f.write("#define   CONFIG_REG_VALUE_STR         \"value\"\n")
@@ -341,12 +344,6 @@ f.write("#define   BIT_MAP_MAX_STR              \"max\"\n")
 f.write("/*----------------------- Structures -----------------------------------*/\n")
 f.write("typedef enum\n")
 f.write("{\n")
-f.write("  CONFIG_READ_ONLY,\n")
-f.write("  CONFIG_READ_WRITE,\n")
-f.write("} CONFIG_RW;\n\n")
-
-f.write("typedef enum\n")
-f.write("{\n")
 f.write("  CONFIG_NO    = 0x00U,\n")
 f.write("  CONFIG_VALUE = 0x01U,\n")
 f.write("  CONFIG_SCALE = 0x02U,\n")
@@ -357,28 +354,35 @@ f.write("typedef struct\n")
 f.write("{\n")
 f.write("  uint16_t  mask;\n")
 f.write("  uint8_t   shift;\n")
-f.write("  uint8_t   min;\n")
-f.write("  uint8_t   max;\n")
 f.write("} eConfigBitMap;\n")
 f.write("\n")
+
+f.write("typedef struct\n");
+f.write("{\n");
+f.write("  uint16_t         adr;         // R\n")
+f.write("  uint16_t         min;         // R\n")
+f.write("  uint16_t         max;         // R\n")
+f.write("  uint16_t         type;        // R\n")
+f.write("  uint8_t          len;         // R\n")
+f.write("  uint8_t          bitMapSize;  // R\n")
+f.write("} eConfigAttributes;\n")
+f.write("\n")
+
 f.write("typedef struct\n")
 f.write("{\n")
-f.write("  uint16_t         page;\n")
-f.write("  uint16_t         adr;\n")
-f.write("  signed char      scale;\n")
-f.write("  uint16_t*        value;\n")
-f.write("  uint16_t         min;\n")
-f.write("  uint16_t         max;\n")
-f.write("  uint16_t         units[MAX_UNITS_LENGTH];\n")
-f.write("  uint16_t         type;\n")
-f.write("  CONFIG_RW        rw;\n")
-f.write("  uint8_t          len;\n")
-f.write("  uint8_t          bitMapSize;\n")
-f.write("  eConfigBitMap*   bitMap;\n")
+f.write("  eConfigAttributes* atrib;                   // R\n");
+f.write("  signed char        scale;                   // RW\n")
+f.write("  uint16_t*          value;                   // RW\n")
+f.write("  uint16_t           units[MAX_UNITS_LENGTH]; // RW\n")
+f.write("  eConfigBitMap*     bitMap;                  // RW\n")
 f.write("} eConfigReg;\n")
+
 f.write("/*------------------------- Extern -------------------------------------*/\n")
 for row in map:
-    f.write("extern eConfigReg " + str(row.name) + ";\n")
+    f.write("extern ");
+    if (row.rw == "r"):
+        f.write("const ");
+    f.write("eConfigReg " + str( row.name ) + ";\n")
 f.write("extern eConfigReg* configReg[SETTING_REGISTER_NUMBER];\n")
 f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")

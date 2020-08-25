@@ -1,8 +1,8 @@
 name;min;max;scale;units;type;length;default;rw
 $0;;;;;;;;
-versionController;0;0;1;;U;1;1;r
-versionFirmware;0;0;1;;U;1;1;r
-serialNumber;0;0;1;;U;6;0;r
+versionController;0;0;1;;U;1;1;rw
+versionFirmware;0;0;1;;U;1;1;rw
+serialNumber;0;0;1;;U;6;0;rw
 displayBrightnesLevel;0;100;1;%;U;1;50;rw
 displayContarstLevel;0;100;1;%;U;1;30;rw
 displaySleepDelay;2;600;1;сек;U;1;10;rw

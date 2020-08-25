@@ -263,8 +263,8 @@ for row in map:
     f.write("   .len        = " + str(row.len)   + "U,\n")
     f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
 
-    if (row.rw != "r"):
-        configStorageSize += ( row.bitMapSize * 3 ) + ( row.len * 2 ) + ( maxUnitsLen * 2 );
+
+    configStorageSize += ( row.bitMapSize * 3 ) + ( row.len * 2 ) + ( maxUnitsLen * 2 ) + 2;
 
     f.write("};\n");
 

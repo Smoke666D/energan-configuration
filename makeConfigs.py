@@ -222,7 +222,7 @@ f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
 f.write("#include   \"config.h\"\n")
 f.write("\n")
-postArray = "eConfigReg* configReg[SETTING_REGISTER_NUMBER] = { "
+postArray = "eConfigReg* const configReg[SETTING_REGISTER_NUMBER] = { "
 maxValueLen = 0;
 for row in map:
     if (row.bitMapSize > 0):
@@ -370,11 +370,11 @@ f.write("\n")
 
 f.write("typedef struct\n")
 f.write("{\n")
-f.write("  eConfigAttributes* atrib;                   // R\n");
-f.write("  signed char        scale;                   // RW\n")
-f.write("  uint16_t*          value;                   // RW\n")
-f.write("  uint16_t           units[MAX_UNITS_LENGTH]; // RW\n")
-f.write("  eConfigBitMap*     bitMap;                  // RW\n")
+f.write("  const eConfigAttributes* atrib;                   // R\n");
+f.write("  signed char              scale;                   // RW\n")
+f.write("  uint16_t*                value;                   // RW\n")
+f.write("  uint16_t                 units[MAX_UNITS_LENGTH]; // RW\n")
+f.write("  eConfigBitMap*           bitMap;                  // RW\n")
 f.write("} eConfigReg;\n")
 
 f.write("/*------------------------- Extern -------------------------------------*/\n")
@@ -383,7 +383,7 @@ for row in map:
     if (row.rw == "r"):
         f.write("const ");
     f.write("eConfigReg " + str( row.name ) + ";\n")
-f.write("extern eConfigReg* configReg[SETTING_REGISTER_NUMBER];\n")
+f.write("extern eConfigReg* const configReg[SETTING_REGISTER_NUMBER];\n")
 f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()

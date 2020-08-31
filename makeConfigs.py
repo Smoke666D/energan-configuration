@@ -296,7 +296,7 @@ for row in map:
             maxBitMapSize = row.bitMapSize;
         f.write("   .bitMap     = " + row.name + "BitMap\n")
     else:
-        f.write("   .bitMap     = NULL\n")
+        f.write("   .bitMap     = NULL,\n")
     f.write("};\n")
     f.write("/*----------------------------------------------------------------*/\n")
 f.write("\n")
@@ -318,6 +318,7 @@ f.write("/*----------------------- Includes ------------------------------------
 f.write("#include \"stm32f2xx_hal.h\"\n")
 f.write("/*------------------------ Define --------------------------------------*/\n")
 f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "U\n")
+f.write("#define   MAX_BIT_MAP_LENGTH           " + str(maxBitMapSize) + "U\n")
 f.write("#define   SETTING_REGISTER_NUMBER      " + str(maxRegNumber) + "U\n")
 f.write("#define   FILDS_TO_WRITE_NUMBER        3U\n")
 f.write("#define   BROADCAST_ADR                0xFFFFU\n")
@@ -377,6 +378,20 @@ f.write("  uint16_t                 units[MAX_UNITS_LENGTH]; // RW\n")
 f.write("  eConfigBitMap*           bitMap;                  // RW\n")
 f.write("} eConfigReg;\n")
 
+f.write("/*------------------------ Addresses -----------------------------------*/\n")
+for row in map:
+    strAdr = "";
+    index  = 0;
+    f.write("#define   ");
+    for i in range( len( row.name ) ):
+        if ( row.name[i].isupper() == True ):
+            strAdr += row.name[index : i].upper() + "_";
+            index = i;
+    strAdr += row.name[index : ].upper() + "_ADR";
+    f.write( strAdr );
+    for i in range( len( strAdr ), 55, 1 ):
+        f.write( " " );
+    f.write( str( row.adr ) + 'U\n' );
 f.write("/*------------------------- Extern -------------------------------------*/\n")
 for row in map:
     f.write("extern ");

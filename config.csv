@@ -1,233 +1,230 @@
-name;min;max;scale;units;type;length;default;rw
+name;min;max;scale;units;type;length;default;rw;str
 $0;;;;;;;;
-versionController;0;0;1;;U;1;1;rw
-versionFirmware;0;0;1;;U;1;1;rw
-serialNumber;0;0;1;;U;6;0;rw
-displayBrightnesLevel;0;100;1;%;U;1;50;rw
-displayContarstLevel;0;100;1;%;U;1;30;rw
-displaySleepDelay;2;600;1;сек;U;1;10;rw
-hysteresisLevel;0;100;0.1;%;U;1;2;rw
+versionController;0;0;1;;U;1;1;rw;Версия контроллера
+versionFirmware;0;0;1;;U;1;1;rw;Версия прошивки
+serialNumber;0;0;1;;U;6;0;rw;Серийный номер
+displayBrightnesLevel;0;100;1;%;U;1;50;rw;Яркость дисплея
+displayContarstLevel;0;100;1;%;U;1;30;rw;Контрастность дисплея
+displaySleepDelay;2;600;1;сек;U;1;10;rw;Время переходя в спящий режим
+hysteresisLevel;0;100;0.1;%;U;1;2;rw;Величина гизтерезиса
 $1;;;;;;;;
-moduleSetup;0;3;1;;U;1;0;rw
+moduleSetup;0;3;1;;U;1;0;rw;
 moduleType;0;1;1;;B;1;1;rw
 alarmAllBlock;0;1;1;;B;1;1;rw
 $2;;;;;;;;
-oilPressureSetup;0;63;1;;U;1;0;rw
-oilPressureSensorType;0;11;1;;B;4;3;rw
-oilPressureOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw
-oilPressureAlarmEnb;0;1;1;;B;1;1;rw
-oilPressurePreAlarmEnb;0;1;1;;B;1;0;rw
-oilPressureAlarmLevel;0;10,3;0.01;Бар;U;1;1,03;rw
-oilPressurePreAlarmLevel;0;10,3;0.01;Бар;U;1;1,24;rw
+oilPressureSetup;0;63;1;;U;1;0;rw;Настройки давления масла
+oilPressureSensorType;0;11;1;;B;4;3;rw;Тип датчика
+oilPressureOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw;Контроль целостности цепи датчика
+oilPressureAlarmEnb;0;1;1;;B;1;1;rw;Аварийный останов
+oilPressurePreAlarmEnb;0;1;1;;B;1;0;rw;Предупредительный сигнал
+oilPressureAlarmLevel;0;10,3;0.01;Бар;U;1;1,03;rw;Аварийный уровень двления масла
+oilPressurePreAlarmLevel;0;10,3;0.01;Бар;U;1;1,24;rw;Предупредительный уровень давления масла
 $3;;;;;;;;
-coolantTempSetup;0;63;1;;U;1;0;rw
-coolantTempSensorType;0;11;1;;B;4;3;rw
-coolantTempOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw
-coolantHightTempAlarmEnb;0;1;1;;B;1;1;rw
-coolantHightTempPreAlarmEnb;0;1;1;;B;1;0;rw
-coolantTempHeaterEnb;0;1;1;;B;1;0;rw
-coolantTempCoolerEnb;0;1;1;;B;1;0;rw
-coolantHightTempAlarmLevel;0;250;1;C;U;1;96;rw
-coolantHightTempPreAlarmLevel;0;250;1;C;U;1;90;rw
-coolantTempHeaterOffLevel;0;250;1;C;U;1;60;rw
-coolantTempHeaterOnLevel;0;250;1;C;U;1;10;rw
-coolantTempCoolerOffLevel;0;250;1;C;U;1;120;rw
-coolantTempCoolerOnLevel;0;250;1;C;U;1;80;rw
+coolantTempSetup;0;63;1;;U;1;0;rw;Настройки температуры ОЖ
+coolantTempSensorType;0;11;1;;B;4;3;rw;Тип дптчика
+coolantTempOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw;Контроль целостности цепи датчика
+coolantHightTempAlarmEnb;0;1;1;;B;1;1;rw;Аварийный сигнал тревоги
+coolantHightTempPreAlarmEnb;0;1;1;;B;1;0;rw;Предупредительный сигнал тревоги
+coolantTempHeaterEnb;0;1;1;;B;1;0;rw;Управление нагревателем ОЖ
+coolantTempCoolerEnb;0;1;1;;B;1;0;rw;Управление охладителем ОЖ
+coolantHightTempAlarmLevel;0;250;1;C;U;1;96;rw;Аварийный уровень температуры ОЖ
+coolantHightTempPreAlarmLevel;0;250;1;C;U;1;90;rw;Предупредительный уровень температуры ОЖ 
+coolantTempHeaterOffLevel;0;250;1;C;U;1;60;rw;Уровень отключения нагревателя ОЖ
+coolantTempHeaterOnLevel;0;250;1;C;U;1;10;rw;Уровень включения нагревателя ОЖ
+coolantTempCoolerOffLevel;0;250;1;C;U;1;120;rw;Уровень отключения охладителя ОЖ
+coolantTempCoolerOnLevel;0;250;1;C;U;1;80;rw;Уровень включения нагревателя ОЖ
 $4;;;;;;;;
-fuelLevelSetup;0;1023;1;;U;1;0;rw
-fuelLevelSensorType;0;5;1;;B;3;3;rw
-fuelLevelOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw
-fuelLevelLowAlarmEnb;0;1;1;;B;1;1;rw
-fuelLevelLowAlarmAction;0;1;1;;B;1;1;rw
-fuelLevelLowPreAlarmEnb;0;1;1;;B;1;0;rw
-fuelLevelHightPreAlarmEnb;0;1;1;;B;1;0;rw
-fuelLevelHightAlarmEnb;0;1;1;;B;1;1;rw
-fuelLevelHightAlarmAction;0;1;1;;B;1;0;rw
-fuelPumpEnb;0;1;1;;B;0;1;rw
-fuelLevelLowAlarmLevel;0;95;1;%;U;1;10;rw
-fuelLevelLowAlarmDelay;0;3600;1;сек;U;1;100;rw
-fuelLevelLowPreAlarmLevel;1;96;1;%;U;1;25;rw
-fuelLevelLowPreAlarmDelay;0;3600;1;сек;U;1;100;rw
-fuelLevelHightPreAlarmLevel;3;98;1;%;U;1;65;rw
-fuelLevelHightPreAlarmDelay;0;3600;1;сек;U;1;0;rw
-fuelLevelHightAlarmLevel;5;100;1;%;U;1;90;rw
-fuelLevelHightAlarmDelay;0;3600;1;сек;U;1;0;rw
-fuelPumpOnLevel;0;100;1;%;U;1;30;rw
-fuelPumpOffLevel;0;100;1;%;U;1;70;rw
+fuelLevelSetup;0;1023;1;;U;1;0;rw;Настройки уровня топлива
+fuelLevelSensorType;0;5;1;;B;3;3;rw;Тип датчика
+fuelLevelOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw;Контроль целостности цепи датчика
+fuelLevelLowAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал тревоги уровня топлива
+fuelLevelLowAlarmAction;0;1;1;;B;1;1;rw;Действие на нижний аварийный сигнал уровня топлива
+fuelLevelLowPreAlarmEnb;0;1;1;;B;1;0;rw;Нижний предупредительный сигнал тревоги уровня топлива
+fuelLevelHightPreAlarmEnb;0;1;1;;B;1;0;rw;Верхний предупредительный сигнал тревоги уровня топлива
+fuelLevelHightAlarmEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнал тревоги уровня топлива
+fuelLevelHightAlarmAction;0;1;1;;B;1;0;rw;Действие на верхний аварийный сигнал тревоги уровня топлива
+fuelPumpEnb;0;1;1;;B;0;1;rw;Подкака топлива
+fuelLevelLowAlarmLevel;0;95;1;%;U;1;10;rw;Нижний аварийный уровень топлива
+fuelLevelLowAlarmDelay;0;3600;1;сек;U;1;100;rw;Задержка нижнего аварийного сигнала уровня топлива
+fuelLevelLowPreAlarmLevel;1;96;1;%;U;1;25;rw;Нижний предупредительный уровень топлива
+fuelLevelLowPreAlarmDelay;0;3600;1;сек;U;1;100;rw;Задержка нижнего предупредительного сигнала уровня топлива
+fuelLevelHightPreAlarmLevel;3;98;1;%;U;1;65;rw;Верхний предупредительный уровень топлива
+fuelLevelHightPreAlarmDelay;0;3600;1;сек;U;1;0;rw;Задержка верхнего предупредительного сигнала уровня топлива
+fuelLevelHightAlarmLevel;5;100;1;%;U;1;90;rw;Верхний аварийный уровень топлива
+fuelLevelHightAlarmDelay;0;3600;1;сек;U;1;0;rw;Задержка аерхнего аварийного сигнала уровня топлива
+fuelPumpOnLevel;0;100;1;%;U;1;30;rw;Уровень включения подкачки топлива
+fuelPumpOffLevel;0;100;1;%;U;1;70;rw;Уровень выключения подкачки топлива
 $5;;;;;;;;
-speedSetup;0;1023;1;;U;1;0;rw
-speedEnb;0;1;1;;B;1;0;rw
-speedLowAlarmEnb;0;1;1;;B;1;0;rw
-speedToothNumber;10;500;1;;U;1;190;rw
-speedLowAlarmLevel;0;6000;1;RPM;U;1;1200;rw
-speedHightAlarmLevel;0;6000;1;RPM;U;1;1710;rw
+speedSetup;0;1023;1;;U;1;0;rw;Настройки оборотов двигателя
+speedEnb;0;1;1;;B;1;0;rw;Активировать
+speedLowAlarmEnb;0;1;1;;B;1;0;rw;Аварийный сигнал тревоги оборотов двигателя
+speedToothNumber;10;500;1;;U;1;190;rw;Количество зубьев маховика
+speedLowAlarmLevel;0;6000;1;RPM;U;1;1200;rw;Нижний аварийный уровень оборотов двигателя
+speedHightAlarmLevel;0;6000;1;RPM;U;1;1710;rw;Верхний аварийный уровень оборотов двигателя
 $6;;;;;;;;
-diaSetup;0;1023;1;;U;1;0;rw
-diaFunction;0;27;1;;B;5;0;rw
-diaPolarity;0;1;1;;B;1;0;rw
-diaAction;0;3;1;;B;2;0;rw
-diaArming;0;4;1;;B;2;0;rw
-diaDelay;0;60;1;сек;U;1;15;rw
-diaMessage;0;0;1;;S;16;0;rw
+diaSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа А
+diaFunction;0;27;1;;B;5;0;rw;Функция
+diaPolarity;0;1;1;;B;1;0;rw;Полярность
+diaAction;0;3;1;;B;2;0;rw;Действие
+diaArming;0;4;1;;B;2;0;rw;Срабатывание
+diaDelay;0;60;1;сек;U;1;15;rw;Задержка
+diaMessage;0;0;1;;S;16;0;rw;Сообщение
 $7;;;;;;;;
-dibSetup;0;1023;1;;U;1;0;rw
-dibFunction;0;27;1;;B;5;0;rw
-dibPolarity;0;1;1;;B;1;0;rw
-dibAction;0;3;1;;B;2;0;rw
-dibArming;0;4;1;;B;2;0;rw
-dibDelay;0;60;1;сек;U;1;15;rw
-dibMessage;0;0;1;;S;16;0;rw
+dibSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа B
+dibFunction;0;27;1;;B;5;0;rw;Функция
+dibPolarity;0;1;1;;B;1;0;rw;Полярность
+dibAction;0;3;1;;B;2;0;rw;Действие
+dibArming;0;4;1;;B;2;0;rw;Срабатывание
+dibDelay;0;60;1;сек;U;1;15;rw;Задержка
+dibMessage;0;0;1;;S;16;0;rw;Сообщение
 $8;;;;;;;;
-dicSetup;0;1023;1;;U;1;0;rw
-dicFunction;0;27;1;;B;5;0;rw
-dicPolarity;0;1;1;;B;1;0;rw
-dicAction;0;3;1;;B;2;0;rw
-dicArming;0;4;1;;B;2;0;rw
-dicDelay;0;60;1;сек;U;1;15;rw
-dicMessage;0;0;1;;S;16;0;rw
+dicSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа C
+dicFunction;0;27;1;;B;5;0;rw;Функция
+dicPolarity;0;1;1;;B;1;0;rw;Полярность
+dicAction;0;3;1;;B;2;0;rw;Действие
+dicArming;0;4;1;;B;2;0;rw;Срабатывание
+dicDelay;0;60;1;сек;U;1;15;rw;Задержка
+dicMessage;0;0;1;;S;16;0;rw;Сообщение
 $9;;;;;;;;
-didSetup;0;1023;1;;U;1;0;rw
-didFunction;0;27;1;;B;5;0;rw
-didPolarity;0;1;1;;B;1;0;rw
-didAction;0;3;1;;B;2;1;rw
-didArming;0;4;1;;B;2;0;rw
-didDelay;0;60;1;сек;U;1;15;rw
-didMessage;0;0;1;;S;16;0;rw
+didSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа D
+didFunction;0;27;1;;B;5;0;rw;Функция
+didPolarity;0;1;1;;B;1;0;rw;Полярность
+didAction;0;3;1;;B;2;1;rw;Действие
+didArming;0;4;1;;B;2;0;rw;Срабатывание
+didDelay;0;60;1;сек;U;1;15;rw;Задержка
+didMessage;0;0;1;;S;16;0;rw;Сообщение
 $10;;;;;;;;
-doSetup;0;1023;1;;U;1;0;rw
-doaNOC;0;1;1;;B;1;0;rw
-dobNOC;0;1;1;;B;1;0;rw
-docNOC;0;1;1;;B;1;0;rw
-dodNOC;0;1;1;;B;1;0;rw
-doeNOC;0;1;1;;B;1;0;rw
-dofNOC;0;1;1;;B;1;0;rw
-doabType;0;1023;1;;U;1;0;rw
-doaType;0;255;1;;B;8;0;rw
-dobType;0;255;1;;B;8;0;rw
-docdType;0;1023;1;;U;1;0;rw
-docType;0;255;1;;B;8;0;rw
-dodType;0;255;1;;B;8;0;rw
-doefType;0;1023;1;;U;1;0;rw
-doeType;0;255;1;;B;8;0;rw
-dofType;0;255;1;;B;8;0;rw
+doSetup;0;1023;1;;U;1;0;rw;Настройки цифровых выходов
+doaNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода A
+dobNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода B
+docNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода C
+dodNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода D
+doeNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода E
+dofNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода F
+doaType;0;255;1;;B;8;0;rw;Функция цифровых выхода A
+dobType;0;255;1;;B;8;0;rw;Функция цифровых выхода B
+docdType;0;1023;1;;U;1;0;rw;none
+docType;0;255;1;;B;8;0;rw;Функция цифровых выхода C
+dodType;0;255;1;;B;8;0;rw;Функция цифровых выхода D
+doefType;0;1023;1;;U;1;0;rw;none
+doeType;0;255;1;;B;8;0;rw;Функция цифровых выхода E
+dofType;0;255;1;;B;8;0;rw;Функция цифровых выхода F
 $11:1;;;;;;;;
-timerMainsTransientDelay;0,1;10;0,1;сек;U;1;0,1;rw
-timerStartDelay;0;300;1;сек;U;1;5;rw
-timerCranking;1;30;1;сек;U;1;10;rw
-timerCrankDelay;1;30;1;сек;U;1;10;rw
-timerStartupIdleTime;0;300;1;сек;U;1;10;rw
-timerNominalRPMDelay;1;30;1;сек;U;1;10;rw
-timerSafetyOnDelay;1;60;1;сек;U;1;10;rw
-timerWarming;0;300;1;сек;U;1;1;rw
+timerMainsTransientDelay;0,1;10;0,1;сек;U;1;0,1;rw;Коммутационные скачки сети
+timerStartDelay;0;300;1;сек;U;1;5;rw;Задержка запуска
+timerCranking;1;30;1;сек;U;1;10;rw;Время пркрутки стартера
+timerCrankDelay;1;30;1;сек;U;1;10;rw;Пауза между прокрутками стартера
+timerStartupIdleTime;0;300;1;сек;U;1;10;rw;Время работы на холостых оборотах
+timerNominalRPMDelay;1;30;1;сек;U;1;10;rw;Задержка перехода на номинальные обороты
+timerSafetyOnDelay;1;60;1;сек;U;1;10;rw;Время блокировки контроля параметров при старте
+timerWarming;0;300;1;сек;U;1;1;rw;Время прогрева
 $11:2;;;;;;;;
-timerTransferDelay;0.1;30;0.1;сек;U;1;0.7;rw
-timerGenBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw
-timerGenBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw
-timerMainsBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw
-timerMainsBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw
-timerReturnDelay;0;300;1;сек;U;1;30;rw
-timerCooling;0;300;1;сек;U;1;60;rw
-timerCoolingIdle;0;300;1;сек;U;1;20;rw
-timerSolenoidHold;0;60;1;сек;U;1;20;rw
-timerFailStopDelay;1;60;1;сек;U;1;30;rw
-timerGenTransientDelay;0.1;10;0.1;сек;U;1;1;rw
+timerTransferDelay;0.1;30;0.1;сек;U;1;0.7;rw;Пауза между переключениями
+timerGenBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw;Длина импульса отключения генераторного автомата
+timerGenBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw;Длина импульса включения генераторного автомата
+timerMainsBreakerTripPulse;0.1;5;0.1;сек;U;1;0.5;rw;Длина импульса отключения сетевого автомата
+timerMainsBreakerClosePulse;0.1;5;0.1;сек;U;1;0.5;rw;Длина импульса включения сетевого автомата
+timerReturnDelay;0;300;1;сек;U;1;30;rw;Задержка останова
+timerCooling;0;300;1;сек;U;1;60;rw;Время охлаждения
+timerCoolingIdle;0;300;1;сек;U;1;20;rw;Время охлаждения на холостых оборотах
+timerSolenoidHold;0;60;1;сек;U;1;20;rw;Время работы стопового соленоида
+timerFailStopDelay;1;60;1;сек;U;1;30;rw;Задержка сигнала «Сбой останова»
+timerGenTransientDelay;0.1;10;0.1;сек;U;1;1;rw;Коммутационные скачки параметров генератора
 $12;;;;;;;;
-genSetup;0;255;1;;U;1;0;rw
-genPowerGeneratorControlEnb;0;1;1;;B;1;1;rw
-genAcSys;0;3;1;;B;2;0;rw
-genRatedActivePowerLevel;0;10000;1;кВт;U;1;40000;rw
-genRatedReactivePowerLevel;0;10000;1;кВАР;U;1;0;rw
-genRatedApparentPowerLevel;0;10000;1;кВА;U;1;200;rw
-genRatedFrequencyLevel;0.3;74.7;0.1;Гц;U;1;50;rw
-genCurrentPrimaryLevel;5;8000;1;А;U;1;600;rw
-genCurrentFullLoadRatingLevel;5;8000;1;А;U;1;500;rw
+genSetup;0;255;1;;U;1;0;rw;Настройки генератора
+genPowerGeneratorControlEnb;0;1;1;;B;1;1;rw;Контроль генератора
+genAcSys;0;3;1;;B;2;0;rw;Тип сети
+genRatedActivePowerLevel;0;10000;1;кВт;U;1;40000;rw;Номинальная активная мощность генератора
+genRatedReactivePowerLevel;0;10000;1;кВАР;U;1;0;rw;Номинальная реактивная мощность генеартора
+genRatedApparentPowerLevel;0;10000;1;кВА;U;1;200;rw;Номинальная полная мощность генератора
+genRatedFrequencyLevel;0.3;74.7;0.1;Гц;U;1;50;rw;Номинальная частота генератора
+genCurrentPrimaryLevel;5;8000;1;А;U;1;600;rw;Первичный ток трансформатора
+genCurrentFullLoadRatingLevel;5;8000;1;А;U;1;500;rw;Полная номинальная нагрузка
 $13 Напряжение генератора;;;;;;;;
-genAlarms;0;65535;1;;U;1;0;rw
-genUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw
-genUnderVoltagePreAlarmEnb;0;1;1;;B;1;1;rw
-genOverVoltagePreAlarmEnb;0;1;1;;B;1;1;rw
-genUnderFrequencyAlarmEnb;0;1;1;;B;1;1;rw
-genUnderFrequencyPreAlarmEnb;0;1;1;;B;1;1;rw
-genOverFrequencyPreAlarmEnb;0;1;1;;B;1;1;rw
-genOverFrequencyAlarmEnb;0;1;1;;B;1;1;rw
-genCurrentOverloadProtectionEnb;0;1;1;;B;1;1;rw
-genCurrentOverPhaseImbalanceEnb;0;1;1;;B;1;1;rw
-genCurrentOverAlarmAction;0;3;1;;B;2;1;rw
-genCurrentOverloadProtectionAction;0;1;1;;B;1;1;rw
-genCurrentOverPhaseImbalanceAction;0;1;1;;B;1;1;rw
-genUnderVoltageAlarmLevel;86;708;1;В;U;1;318;rw
-genUnderVoltagePreAlarmLevel;88;710;1;В;U;1;339;rw
-genOverVoltagePreAlarmLevel;93;715;1;В;U;1;439;rw
-genOverVoltageAlarmLevel;95;717;1;В;U;1;458;rw
-genUnderFrequencyAlarmLevel;0;74.4;0.1;Гц;U;1;40;rw
-genUnderFrequencyPreAlarmLevel;0.1;74.5;0.1;Гц;U;1;42;rw
-genOverFrequencyPreAlarmLevel;0.4;74.8;0.1;Гц;U;1;54;rw
-genOverFrequencyAlarmLevel;0.5;74.9;0.1;Гц;U;1;55;rw
-genOverCurrentThermalProtectionLevel;90;200;1;%;U;1;20;rw
-genOverCurrentCutoffLevel;200;500;1;%;U;1;40;rw
-genOverCurrentAlarmLevel;50;120;1;%;U;1;100;rw
-genOverCurrentAlarmDelay;0;3600;1;сек;U;1;60;rw
-genCurrentOverloadProtectionLevel;1;125;1;%;U;1;100;rw
-genCurrentOverloadProtectionDelay;0;3600;1;сек;U;1;5;rw
-genCurrentOverPhaseImbalanceLevel;1;125;1;%;U;1;100;rw
-genCurrentOverPhaseImbalanceDelay;0;3600;1;сек;U;1;60;rw
+genAlarms;0;65535;1;;U;1;0;rw;Настройки событий генератора
+genUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал тревоги напряжения генратора
+genUnderVoltagePreAlarmEnb;0;1;1;;B;1;1;rw;Нижний предупредительный сигнал тревоги напряжения генратора
+genOverVoltagePreAlarmEnb;0;1;1;;B;1;1;rw;Верхний предупредительный сигнал тревоги напряжения генратора
+genUnderFrequencyAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал тревоги частоты генератора
+genUnderFrequencyPreAlarmEnb;0;1;1;;B;1;1;rw;Нижний предупредительный сигнал тревоги частоты генератора
+genOverFrequencyPreAlarmEnb;0;1;1;;B;1;1;rw;Верхний предупредительный сигнал тревоги частоты генератора
+genOverFrequencyAlarmEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнал тревоги частоты генератора
+genCurrentOverloadProtectionEnb;0;1;1;;B;1;1;rw;Защита от перегрузки генератора
+genCurrentOverPhaseImbalanceEnb;0;1;1;;B;1;1;rw;Защита от перекоса фаз генератора
+genCurrentOverAlarmAction;0;3;1;;B;2;1;rw;Действие при сверхтоке генератора
+genCurrentOverloadProtectionAction;0;1;1;;B;1;1;rw;Действие при перегрузке генератора
+genCurrentOverPhaseImbalanceAction;0;1;1;;B;1;1;rw;Действие при перекосе фаз генератора
+genUnderVoltageAlarmLevel;86;708;1;В;U;1;318;rw;Нижний аварийный уровень напряжения генератора
+genUnderVoltagePreAlarmLevel;88;710;1;В;U;1;339;rw;Нижний предупредтельный уровень напряжения генератора
+genOverVoltagePreAlarmLevel;93;715;1;В;U;1;439;rw;Верхний предупредительный уровень напряжения генератора
+genOverVoltageAlarmLevel;95;717;1;В;U;1;458;rw;Верхний аварийный уровень напряжения генератора
+genUnderFrequencyAlarmLevel;0;74.4;0.1;Гц;U;1;40;rw;Нижний аварийный уровень частоты генератора
+genUnderFrequencyPreAlarmLevel;0.1;74.5;0.1;Гц;U;1;42;rw;Нижний предупредительный уровень частоты генератора
+genOverFrequencyPreAlarmLevel;0.4;74.8;0.1;Гц;U;1;54;rw;Верхний предупредительный уровень частоты генератора
+genOverFrequencyAlarmLevel;0.5;74.9;0.1;Гц;U;1;55;rw;Верхний аварийный уровень частоты генератора
+genOverCurrentThermalProtectionLevel;90;200;1;%;U;1;20;rw;Тепловая защита генератора
+genOverCurrentCutoffLevel;200;500;1;%;U;1;40;rw;Токовая отсечка генератора
+genOverCurrentAlarmLevel;50;120;1;%;U;1;100;rw;Верхний аварийный уровень тока генератора
+genOverCurrentAlarmDelay;0;3600;1;сек;U;1;60;rw;Задержка верхнего аваарийного сигнала тревоги тока генератора
+genCurrentOverloadProtectionLevel;1;125;1;%;U;1;100;rw;Уровень защиты от перегрузки генератора
+genCurrentOverloadProtectionDelay;0;3600;1;сек;U;1;5;rw;Задержка срабатывания защиты от перегрузки генератора
+genCurrentOverPhaseImbalanceLevel;1;125;1;%;U;1;100;rw;Уровень допустимого перекоса фаз генератора
+genCurrentOverPhaseImbalanceDelay;0;3600;1;сек;U;1;60;rw;Задержка срабатывания защиты перекоса фаз генератора
 $14;;;;;;;;
-mainsSetup;0;31;1;;U;1;0;rw
-mainsControlEnb;0;1;1;;B;1;1;rw
-mainsPowerOffImmediatelyEnb;0;1;1;;B;1;0;rw
+mainsSetup;0;31;1;;U;1;0;rw;Настройки сети
+mainsControlEnb;0;1;1;;B;1;1;rw;Контроль сети
+mainsPowerOffImmediatelyEnb;0;1;1;;B;1;0;rw;Немедленное отключение при потери сети
 $15;;;;;;;;
-mainsAlarms;0;15;1;;U;1;0;rw
-mainsUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw
-mainsOverVoltageAlarmEnb;0;1;1;;B;1;1;rw
-mainsUnderFrequencyAlarmEnb;0;1;1;;B;1;1;rw
-mainsOverFrequencyAlarmEnb;0;1;1;;B;1;1;rw
-mainsUnderVoltageAlarmLevel;86;713;1;В;U;1;318;rw
-mainsOverVoltageAlarmLevel;90;717;1;В;U;1;438;rw
-mainsUnderFrequencyAlarmLevel;0;74.7;0.1;Гц;U;1;45;rw
-mainsOverFrequencyAlarmLevel;0.2;74.9;0.1;Гц;U;1;52;rw
+mainsAlarms;0;15;1;;U;1;0;rw;Настройки событий сети
+mainsUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал тревоги напряжения сети
+mainsOverVoltageAlarmEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнал тревоги напряжения сети
+mainsUnderFrequencyAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнат тревоги частоты сети
+mainsOverFrequencyAlarmEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнат тревоги частоты сети
+mainsUnderVoltageAlarmLevel;86;713;1;В;U;1;318;rw;Нижний аварийный уровень напряжения сети
+mainsOverVoltageAlarmLevel;90;717;1;В;U;1;438;rw;Верхний аварийный уровень напряжения сети
+mainsUnderFrequencyAlarmLevel;0;74.7;0.1;Гц;U;1;45;rw;Нижний аварийный уровень частоты сети
+mainsOverFrequencyAlarmLevel;0.2;74.9;0.1;Гц;U;1;52;rw;Верхний аварийный уровень частоты сети
 $16;;;;;;;;
-engineSetup;0;63;1;;U;1;0;rw
-engineStartAttempts;1;9;1;;B;4;3;rw
-enginePreHeatEnb;0;1;1;;B;1;0;rw
-enginePreHeatLevel;0;100;1;C;U;1;50;rw
-enginePreHeatDelay;0;3600;1;сек;U;1;0;rw
-engineWorkTimeInput;0;65535;1;час;U;1;0;rw
-engineStartsNumberInput;0;65535;1;;U;1;0;rw
+engineSetup;0;63;1;;U;1;0;rw;Настройки двигателя
+engineStartAttempts;1;9;1;;B;4;3;rw;Количество попыток запуска двигателя
+enginePreHeatEnb;0;1;1;;B;1;0;rw;Свечи накаливания
+enginePreHeatLevel;0;100;1;C;U;1;50;rw;Уровень включения свечей накаливания
+enginePreHeatDelay;0;3600;1;сек;U;1;0;rw;Длительность работы свечей накаливания
 $17;;;;;;;;
-starterStopSetup;0;7;1;;U;1;0;rw
-starterOilPressureCheckOnStartEnb;0;1;1;;B;1;1;rw
-starterStopOilPressureEnb;0;1;1;;B;1;0;rw
-starterStopChargeAlternatorEnb;0;1;1;;B;1;1;rw
-starterStopSpeedEnb;0;1;1;;B;1;0;rw
-starterStopGenFreqLevel;0;40;0.1;Гц;U;1;21;rw
-starterStopOilPressureLevel;0.5;4;0.1;Бар;U;1;2;rw
-starterStopChargeAlternatorLevel;0;40;0.1;В;U;1;6;rw
-starterStopSpeedLevel;0;6000;0.1;RPM;U;1;1500;rw
+starterStopSetup;0;7;1;;U;1;0;rw;Настройки стартера
+starterOilPressureCheckOnStartEnb;0;1;1;;B;1;1;rw;Проверка давления масла перед запуском
+starterStopOilPressureEnb;0;1;1;;B;1;0;rw;Отключение стартера по давлению масла
+starterStopChargeAlternatorEnb;0;1;1;;B;1;1;rw;Отключение стартера по напряжению зарядного генератора
+starterStopSpeedEnb;0;1;1;;B;1;0;rw;Отключени естартера по оборотам двигателя
+starterStopGenFreqLevel;0;40;0.1;Гц;U;1;21;rw;Отключить стартер по частоте генератора
+starterStopOilPressureLevel;0.5;4;0.1;Бар;U;1;2;rw;Давление масла отключения стартера
+starterStopChargeAlternatorLevel;0;40;0.1;В;U;1;6;rw;Напряжение зарядного генератора отключения стартаера
+starterStopSpeedLevel;0;6000;0.1;RPM;U;1;1500;rw;Обороты двигателя отключения стартера
 $18;;;;;;;;
-batteryAlarms;0;15;1;;U;1;0;rw
-batteryUnderVoltageEnb;0;1;1;;B;1;1;rw
-batteryOverVoltageEnb;0;1;1;;B;1;1;rw
-batteryChargeShutdownEnb;0;1;1;;B;1;1;rw
-batteryChargeWarningEnb;0;1;1;;B;1;1;rw
-batteryUnderVoltageLevel;0;39.7;0.1;В;U;1;10;rw
-batteryUnderVoltageDelay;0;86400;1;сек;U;1;60;rw
-batteryOverVoltageLevel;0.3;40;0.1;В;U;1;30;rw
-batteryOverVoltageDelay;0;86400;1;сек;U;1;60;rw
-batteryChargeShutdownLevel;0;38.9;0.1;В;U;1;4;rw
-batteryChargeShutdownDelay;0;3600;1;сек;U;1;5;rw
-batteryChargeWarningLevel;0.1;39;0.1;В;U;1;6;rw
-batteryChargeWarningDelay;0;3600;1;сек;U;1;5;rw
+batteryAlarms;0;15;1;;U;1;0;rw;Настройки событий АКБ
+batteryUnderVoltageEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал напряжения АКБ
+batteryOverVoltageEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнал напряжения АКБ
+batteryChargeShutdownEnb;0;1;1;;B;1;1;rw;Аварийный сигнал зарядного генератора
+batteryChargeWarningEnb;0;1;1;;B;1;1;rw;Предупредительный сигнал зарядного генреатора
+batteryUnderVoltageLevel;0;39.7;0.1;В;U;1;10;rw;Нижний аварийный уровень напряжения АКБ
+batteryUnderVoltageDelay;0;86400;1;сек;U;1;60;rw;Задержка нижнего аварийного сигнала напряжения АКБ
+batteryOverVoltageLevel;0.3;40;0.1;В;U;1;30;rw;Верхний аварийный уровень напряжения АКБ 
+batteryOverVoltageDelay;0;86400;1;сек;U;1;60;rw;Задержка верхнего аварийного сигнала напряжения АКБ
+batteryChargeShutdownLevel;0;38.9;0.1;В;U;1;4;rw;Уровень аварийного сигнала зарядного генератора
+batteryChargeShutdownDelay;0;3600;1;сек;U;1;5;rw;Задержка аварийного сигнала зарядного генератора
+batteryChargeWarningLevel;0.1;39;0.1;В;U;1;6;rw;Уровень предупредительного сигнала зарядного генератора
+batteryChargeWarningDelay;0;3600;1;сек;U;1;5;rw;Задержка предупредительного сигнала зарядного генератора
 $19;;;;;;;;
-maintenanceAlarms;0;63;1;;U;1;0;rw
-maintenanceAlarmOilEnb;0;1;1;;B;1;0;rw
-maintenanceAlarmOilAction;0;1;1;;B;1;1;rw
-maintenanceAlarmAirEnb;0;1;1;;B;1;0;rw
-maintenanceAlarmAirAction;0;1;1;;B;1;1;rw
-maintenanceAlarmFuelEnb;0;1;1;;B;1;0;rw
-maintenanceAlarmFuelAction;0;1;1;;B;1;1;rw
-maintenanceAlarmOilTime;10;5000;1;час;U;1;10;rw
-maintenanceAlarmAirTime;10;5000;1;час;U;1;10;rw
-maintenanceAlarmFuelTime;10;5000;1;час;U;1;10;rw
+maintenanceAlarms;0;63;1;;U;1;0;rw;Настройки событий ТО
+maintenanceAlarmOilEnb;0;1;1;;B;1;0;rw;Сигнал ТО масло
+maintenanceAlarmOilAction;0;1;1;;B;1;1;rw;Действие сигнала ТО масло
+maintenanceAlarmAirEnb;0;1;1;;B;1;0;rw;Сигнал ТО вохдух
+maintenanceAlarmAirAction;0;1;1;;B;1;1;rw;Действие сигнала ТО воздух
+maintenanceAlarmFuelEnb;0;1;1;;B;1;0;rw;Сигнала ТО топливо
+maintenanceAlarmFuelAction;0;1;1;;B;1;1;rw;Действие сигнала ТО топливо
+maintenanceAlarmOilTime;10;5000;1;час;U;1;10;rw;Периодв срабатывания ТО масло
+maintenanceAlarmAirTime;10;5000;1;час;U;1;10;rw;Периодв срабатывания ТО воздух
+maintenanceAlarmFuelTime;10;5000;1;час;U;1;10;rw;Периодв срабатывания ТО топливо
 $20;;;;;;;;
-logSetup;0;65535;1;;U;1;0;rw
-logSaveWarningEventsEnb;0;1;1;;B;1;1;rw
+logSetup;0;65535;1;;U;1;0;rw;Настройки журнала
+logSaveWarningEventsEnb;0;1;1;;B;1;1;rw;Сохранять предупреждения в журнале

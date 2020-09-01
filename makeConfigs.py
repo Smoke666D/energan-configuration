@@ -16,6 +16,7 @@ class bitMap:
         self.min   = 0
         self.shift = 0
         self.max   = 0xFFFF
+        self.str   = ""
 
 class register(object):
     def __init__(self):
@@ -31,6 +32,7 @@ class register(object):
         self.len     = 1
         self.bitMapSize = 0
         self.bit     = freeList[:]
+        self.str     = ""
     def setAdr(self, n):
         self.adr = n
         return
@@ -61,6 +63,9 @@ class register(object):
     def setLen(self, n):
         self.len = n
         return
+    def setStr( self, str ):
+        self.str = str;
+        return;
 
 def bitMaskGen(len, cnt):
     data = 0
@@ -69,7 +74,7 @@ def bitMaskGen(len, cnt):
     data = data << cnt
     return data
 
-def orValue(value, n, s):
+def orValue( value, n, s ):
     return value | (n << s)
 #*******************************************************************************
 #*******************************************************************************
@@ -85,18 +90,18 @@ with open('config.csv') as file:
     for row in reader:
         rawData.append(row)
 # Parsing data to structure
-map         = []
-bitCnt      = 0
-curAdr      = 0
-maxUnitsLen = 0
-regNumber   = 0
+map          = []
+bitCnt       = 0
+curAdr       = 0
+maxUnitsLen  = 0
+regNumber    = 0
 maxRegNumber = 0;
 for input in rawData:
     if input["name"][0] == "#":
         curAdr  = 0
     else:
-        if ( input["name"] != "Reserved")and(input["name"][0] != "$"):
-            if input["type"] != "B":
+        if ( input["name"] != "Reserved" ) and ( input["name"][0] != "$" ):
+            if ( input["type"] != "B" ):
                 regNumber += 1;
                 bitCnt     = 0;
                 map.append( register() );
@@ -122,6 +127,7 @@ for input in rawData:
                 curAdr = curAdr +  1;#map[-1].len
                 input["default"] = input["default"].replace( ',', '.' );
                 map[-1].setValue( int( float( input["default"] ) / scl ) );
+                map[-1].setStr( input["str"] );
                 #if input["name"] == 'oilPressureAlarmLevel':
                 #    print( str( map[-1].scale ) )
             else:
@@ -130,6 +136,7 @@ for input in rawData:
                 map[-1].bitMapSize = map[-1].bitMapSize + 1
                 map[-1].value   = int(map[-1].value)
                 bm = bitMap()
+                bm.str  = input["str"]
                 bm.name = input["name"]
                 bm.min  = int(input["min"])
                 bm.max  = int(input["max"])
@@ -222,7 +229,8 @@ f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
 f.write("#include   \"config.h\"\n")
 f.write("\n")
-postArray = "eConfigReg* const configReg[SETTING_REGISTER_NUMBER] = { "
+postArray       = "eConfigReg* const configReg[SETTING_REGISTER_NUMBER] = { ";
+dictionaryArray = "const char configDictionary[SETTING_REGISTER_NUMBER] = { ";
 maxValueLen = 0;
 for row in map:
     if (row.bitMapSize > 0):
@@ -252,7 +260,6 @@ for row in map:
         if i < (row.len-1):
             f.write(", ")
     f.write(" };\n")
-
     f.write("const eConfigAttributes " + row.name + "Atrib =\n{\n" );
     f.write("   .adr        = " + str(row.adr)   + "U,\n")
     f.write("   .min        = " + str(row.min)   + "U,\n")
@@ -262,16 +269,13 @@ for row in map:
     f.write("   .type       = '"+ row.type   + "',\n")
     f.write("   .len        = " + str(row.len)   + "U,\n")
     f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
-
-
     configStorageSize += ( row.bitMapSize * 3 ) + ( row.len * 2 ) + ( maxUnitsLen * 2 ) + 2;
-
     f.write("};\n");
-
     if (row.rw == "r"):
         f.write("const ")
     f.write("eConfigReg " + row.name + " =\n")
-    postArray += "&" + row.name + ", "
+    postArray       += "&" + row.name + ", ";
+    dictionaryArray += '"' + row.str + '", ';
     f.write("{\n")
     f.write("   .atrib      = &" + row.name + "Atrib,\n");
     if (row.scale >= 0):
@@ -302,8 +306,11 @@ for row in map:
 f.write("\n")
 postArray = postArray[:-1]
 postArray = postArray[:-1]
-f.write(postArray + "};\n")
-f.close()
+dictionaryArray = dictionaryArray[:-1];
+dictionaryArray = dictionaryArray[:-1];
+f.write(postArray + "};\n");
+f.write(dictionaryArray + "};\n");
+f.close();
 #****** H ******
 maxConfigSize = maxUnitsLen*2 + 1 + maxLen*2 + maxBitMapSize*3;
 f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
@@ -399,6 +406,7 @@ for row in map:
         f.write("const ");
     f.write("eConfigReg " + str( row.name ) + ";\n")
 f.write("extern eConfigReg* const configReg[SETTING_REGISTER_NUMBER];\n")
+f.write("extern const char dictionaryArray[SETTING_REGISTER_NUMBER];\n")
 f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()

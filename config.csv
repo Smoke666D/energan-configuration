@@ -31,8 +31,8 @@ coolantHightTempAlarmLevel;0;250;1;C;U;1;96;rw;Аварийный уровень температуры ОЖ
 coolantHightTempPreAlarmLevel;0;250;1;C;U;1;90;rw;Предупредительный уровень температуры ОЖ 
 coolantTempHeaterOffLevel;0;250;1;C;U;1;60;rw;Уровень отключения нагревателя ОЖ
 coolantTempHeaterOnLevel;0;250;1;C;U;1;10;rw;Уровень включения нагревателя ОЖ
-coolantTempCoolerOffLevel;0;250;1;C;U;1;120;rw;Уровень отключения охладителя ОЖ
-coolantTempCoolerOnLevel;0;250;1;C;U;1;80;rw;Уровень включения нагревателя ОЖ
+coolantTempCoolerOffLevel;0;250;1;C;U;1;80;rw;Уровень отключения охладителя ОЖ
+coolantTempCoolerOnLevel;0;250;1;C;U;1;120;rw;Уровень включения нагревателя ОЖ
 $4;;;;;;;;
 fuelLevelSetup;0;1023;1;;U;1;0;rw;Настройки уровня топлива
 fuelLevelSensorType;0;5;1;;B;3;3;rw;Тип датчика
@@ -43,7 +43,7 @@ fuelLevelLowPreAlarmEnb;0;1;1;;B;1;0;rw;Нижний предупредительный сигнал тревоги 
 fuelLevelHightPreAlarmEnb;0;1;1;;B;1;0;rw;Верхний предупредительный сигнал тревоги уровня топлива
 fuelLevelHightAlarmEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнал тревоги уровня топлива
 fuelLevelHightAlarmAction;0;1;1;;B;1;0;rw;Действие на верхний аварийный сигнал тревоги уровня топлива
-fuelPumpEnb;0;1;1;;B;0;1;rw;Подкака топлива
+fuelPumpEnb;0;1;1;;B;1;1;rw;Подкака топлива
 fuelLevelLowAlarmLevel;0;95;1;%;U;1;10;rw;Нижний аварийный уровень топлива
 fuelLevelLowAlarmDelay;0;3600;1;сек;U;1;100;rw;Задержка нижнего аварийного сигнала уровня топлива
 fuelLevelLowPreAlarmLevel;1;96;1;%;U;1;25;rw;Нижний предупредительный уровень топлива
@@ -101,12 +101,13 @@ docNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода C
 dodNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода D
 doeNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода E
 dofNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода F
+doabType;0;1023;1;;U;1;0;rw;Функция цифровых выходов A и B
 doaType;0;255;1;;B;8;0;rw;Функция цифровых выхода A
 dobType;0;255;1;;B;8;0;rw;Функция цифровых выхода B
-docdType;0;1023;1;;U;1;0;rw;none
+docdType;0;1023;1;;U;1;0;rw;Функция цифровых выходов C и D
 docType;0;255;1;;B;8;0;rw;Функция цифровых выхода C
 dodType;0;255;1;;B;8;0;rw;Функция цифровых выхода D
-doefType;0;1023;1;;U;1;0;rw;none
+doefType;0;1023;1;;U;1;0;rw;Функция цифровых выходов E и F
 doeType;0;255;1;;B;8;0;rw;Функция цифровых выхода E
 dofType;0;255;1;;B;8;0;rw;Функция цифровых выхода F
 $11:1;;;;;;;;

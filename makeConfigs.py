@@ -9,6 +9,17 @@ import codecs
 #*******************************************************************************
 #*******************************************************************************
 #*******************************************************************************
+def setClass ( char ):
+    if (char == 'U'):
+        return 'CONFIG_TYPE_UNSIGNED';
+    if (char == 'S'):
+        return 'CONFIG_TYPE_SIGNED';
+    if (char == 'C'):
+        return 'CONFIG_TYPE_CHAR';
+    if (char == 'B'):
+        return 'CONFIG_TYPE_BITMAP';
+    return '';
+
 class bitMap:
     def __init__(self):
         self.name  = ""
@@ -27,7 +38,7 @@ class register(object):
         self.min     = 0
         self.max     = 0xFFFF
         self.units   = ""
-        self.type    = "U"
+        self.type    = setClass( "U" );
         self.rw      = "rw"
         self.len     = 1
         self.bitMapSize = 0
@@ -76,6 +87,14 @@ def bitMaskGen(len, cnt):
 
 def orValue( value, n, s ):
     return value | (n << s)
+
+def fix16_from_float( a ):
+    temp = a * 0x00010000;
+    if (temp >= 0):
+        temp +=  0.5
+    else:
+        temp += -0.5;
+    return int( temp );
 #*******************************************************************************
 #*******************************************************************************
 #*******************************************************************************
@@ -220,8 +239,10 @@ for row in map:
 print ('****** Make Struct array ******')
 time = strftime( "%Y-%m-%d %H:%M:%S", gmtime() );
 configStorageSize = 0;
-#****** C ******
+#************************************* C ***************************************
 totalSize = 0;
+minScale  = 0;
+maxScale  = 0;
 f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c","w+","utf-8")
 f.write("/*\n")
 f.write(" * Configuration file from 'config.csv'\n")
@@ -229,12 +250,12 @@ f.write(" * Make time: " + time + "\n")
 f.write(" */\n")
 f.write("#include   \"config.h\"\n")
 f.write("\n")
-postArray       = "eConfigReg* const configReg[SETTING_REGISTER_NUMBER] = { ";
-dictionaryArray = "const char configDictionary[SETTING_REGISTER_NUMBER] = { ";
+postArray       = "eConfigReg* const configReg[SETTING_REGISTER_NUMBER]  = { ";
+dictionaryArray = "const char*       configDictionary[SETTING_REGISTER_NUMBER] = { ";
 maxValueLen = 0;
 for row in map:
     if (row.bitMapSize > 0):
-        f.write("static eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
+        f.write("const eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
         f.write("{\n")
         first = 0
         for bm in row.bit:
@@ -266,10 +287,19 @@ for row in map:
     if (row.max > 65535):
         row.max = 65535
     f.write("   .max        = " + str(row.max)   + "U,\n")
-    f.write("   .type       = '"+ row.type   + "',\n")
+    if ( row.bitMapSize > 0 ):
+        f.write("   .type       = " + setClass( 'B' ) + ",\n");
+    else:
+        f.write("   .type       = " + setClass( row.type ) + ",\n")
     f.write("   .len        = " + str(row.len)   + "U,\n")
     f.write("   .bitMapSize = " + str(row.bitMapSize) + "U,\n")
-    configStorageSize += ( row.bitMapSize * 3 ) + ( row.len * 2 ) + ( maxUnitsLen * 2 ) + 2;
+    if ( row.bitMapSize > 0 ):
+        f.write("   .bitMap     = " + row.name + "BitMap\n")
+    else:
+        f.write("   .bitMap     = NULL,\n")
+    if ( row.bitMapSize > maxBitMapSize ):
+        maxBitMapSize = row.bitMapSize;
+    configStorageSize += ( row.len * 2 ) + ( maxUnitsLen * 2 ) + 2;
     f.write("};\n");
     if (row.rw == "r"):
         f.write("const ")
@@ -278,6 +308,10 @@ for row in map:
     dictionaryArray += '"' + row.str + '", ';
     f.write("{\n")
     f.write("   .atrib      = &" + row.name + "Atrib,\n");
+    if ( row.scale < minScale ):
+        minScale = row.scale;
+    if ( row.scale > maxScale ):
+        maxScale = row.scale;
     if (row.scale >= 0):
         f.write("   .scale      = " + str(int(row.scale)) + "U,\n")
     else:
@@ -295,12 +329,7 @@ for row in map:
             f.write(", ");
         i = i + 1;
     f.write("},\n")
-    if ( row.bitMapSize > 0 ):
-        if ( row.bitMapSize > maxBitMapSize ):
-            maxBitMapSize = row.bitMapSize;
-        f.write("   .bitMap     = " + row.name + "BitMap\n")
-    else:
-        f.write("   .bitMap     = NULL,\n")
+
     f.write("};\n")
     f.write("/*----------------------------------------------------------------*/\n")
 f.write("\n")
@@ -310,6 +339,15 @@ dictionaryArray = dictionaryArray[:-1];
 dictionaryArray = dictionaryArray[:-1];
 f.write(postArray + "};\n");
 f.write(dictionaryArray + "};\n");
+
+f.write("const fix16_t     scaleMulArray[CONFIG_SCALE_NUM] = { ")
+for i in range( maxScale - minScale + 1 ):
+    f.write( str( fix16_from_float ( pow( 10, ( minScale + i ) ) )   ) )
+    if ( i < ( maxScale - minScale ) ):
+        f.write(",");
+    f.write(" ")
+f.write("};\n")
+
 f.close();
 #****** H ******
 maxConfigSize = maxUnitsLen*2 + 1 + maxLen*2 + maxBitMapSize*3;
@@ -323,6 +361,7 @@ f.write("#ifndef INC_CONFIG_H_\n");
 f.write("#define INC_CONFIG_H_\n");
 f.write("/*----------------------- Includes -------------------------------------*/\n");
 f.write("#include \"stm32f2xx_hal.h\"\n")
+f.write("#include \"fix16.h\"\n")
 f.write("/*------------------------ Define --------------------------------------*/\n")
 f.write("#define   MAX_UNITS_LENGTH             " + str(maxUnitsLen) + "U\n")
 f.write("#define   MAX_BIT_MAP_LENGTH           " + str(maxBitMapSize) + "U\n")
@@ -332,6 +371,9 @@ f.write("#define   BROADCAST_ADR                0xFFFFU\n")
 f.write("#define   MAX_VALUE_LENGTH             " + str( maxLen ) + "U\n" )
 f.write("#define   CONFIG_MAX_SIZE              " + str( maxConfigSize ) + "U     // bytes\n" );
 f.write("#define   CONFIG_TOTAL_SIZE            " + str( configStorageSize ) + "U   // bytes\n" );
+f.write("#define   MIN_CONFIG_SCALE             ( " + str( minScale ) + " )\n" );
+f.write("#define   MAX_CONFIG_SCALE             ( " + str( maxScale ) + " )\n");
+f.write("#define   CONFIG_SCALE_NUM             ( " + str( maxScale - minScale + 1 ) + " )\n");
 f.write("\n")
 f.write("#define   CONFIG_REG_ADR_STR           \"adr\"\n")
 f.write("#define   CONFIG_REG_SCALE_STR         \"scale\"\n")
@@ -358,31 +400,39 @@ f.write("  CONFIG_SCALE = 0x02U,\n")
 f.write("  CONFIG_UNITS = 0x03U,\n")
 f.write("} CONFIG_FILD;\n\n")
 
-f.write("typedef struct\n")
+f.write("typedef enum\n")
+f.write("{\n")
+f.write("  CONFIG_TYPE_UNSIGNED  = 'U',\n")
+f.write("  CONFIG_TYPE_SIGNED    = 'S',\n")
+f.write("  CONFIG_TYPE_CHAR      = 'C',\n")
+f.write("  CONFIG_TYPE_BITMAP    = 'B',\n")
+f.write("} CONFIG_TYPE;\n\n")
+
+f.write("typedef struct __packed\n")
 f.write("{\n")
 f.write("  uint16_t  mask;\n")
 f.write("  uint8_t   shift;\n")
 f.write("} eConfigBitMap;\n")
 f.write("\n")
 
-f.write("typedef struct\n");
+f.write("typedef struct __packed\n");
 f.write("{\n");
 f.write("  uint16_t         adr;         // R\n")
 f.write("  uint16_t         min;         // R\n")
 f.write("  uint16_t         max;         // R\n")
-f.write("  uint16_t         type;        // R\n")
+f.write("  CONFIG_TYPE      type;        // R\n")
 f.write("  uint8_t          len;         // R\n")
 f.write("  uint8_t          bitMapSize;  // R\n")
+f.write("  eConfigBitMap*   bitMap;      // R\n")
 f.write("} eConfigAttributes;\n")
 f.write("\n")
 
-f.write("typedef struct\n")
+f.write("typedef struct __packed\n")
 f.write("{\n")
 f.write("  const eConfigAttributes* atrib;                   // R\n");
-f.write("  signed char              scale;                   // RW\n")
+f.write("  int8_t                   scale;                   // RW\n")
 f.write("  uint16_t*                value;                   // RW\n")
 f.write("  uint16_t                 units[MAX_UNITS_LENGTH]; // RW\n")
-f.write("  eConfigBitMap*           bitMap;                  // RW\n")
 f.write("} eConfigReg;\n")
 
 f.write("/*------------------------ Addresses -----------------------------------*/\n")
@@ -406,7 +456,8 @@ for row in map:
         f.write("const ");
     f.write("eConfigReg " + str( row.name ) + ";\n")
 f.write("extern eConfigReg* const configReg[SETTING_REGISTER_NUMBER];\n")
-f.write("extern const char dictionaryArray[SETTING_REGISTER_NUMBER];\n")
+f.write("extern const char*       dictionaryArray[SETTING_REGISTER_NUMBER];\n")
+f.write("extern const fix16_t     scaleMulArray[CONFIG_SCALE_NUM];\n");
 f.write("/*----------------------------------------------------------------------*/\n")
 f.write("#endif /* INC_CONFIG_H_ */\n")
 f.close()

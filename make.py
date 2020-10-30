@@ -20,6 +20,17 @@ def setClass ( char ):
         return 'CONFIG_TYPE_BITMAP';
     return '';
 
+def makeDefineStr ( str, postfix = '' ):
+    output = "";
+    index  = 0;
+    for i in range( len( str ) ):
+        if ( str[i].isupper() == True ):
+            output += str[index : i].upper() + "_";
+            index   = i;
+    if ( postfix != '' ):
+        output += str[index : ].upper() + "_" + postfix;
+    return output;
+
 class bitMap:
     def __init__(self):
         self.name  = ""
@@ -231,14 +242,15 @@ with open('config.json', 'w') as f:
         json_string = json.dump(row.__dict__, f, indent=4)
 print("Done!")
 #*******************************************************************************
-maxLen = 0;
-maxBitMapSize = 0;
+maxLen            = 0;
+maxBitMapSize     = 0;
+bitAdresses       = "";
+configStorageSize = 0;
 for row in map:
     if row.len > maxLen:
         maxLen = row.len
 print ('****** Make Struct array ******')
 time = strftime( "%Y-%m-%d %H:%M:%S", gmtime() );
-configStorageSize = 0;
 #************************************* C ***************************************
 totalSize = 0;
 minScale  = 0;
@@ -255,16 +267,27 @@ dictionaryArray = "const char*       configDictionary[SETTING_REGISTER_NUMBER] =
 maxValueLen = 0;
 for row in map:
     if (row.bitMapSize > 0):
+        bitAdr = 0;
         f.write("const eConfigBitMap " + row.name + "BitMap[" + str(row.bitMapSize) + "U] = \n")
         f.write("{\n")
         first = 0
         for bm in row.bit:
             totalSize += 5;
-            first = first + 1
+            first     += 1;
             f.write("   { ")
             f.write(str(bm["mask"]) + "U, ")
             f.write(str(bm["shift"]) + "U ")
             f.write("},     // " + bm["name"] + "\n")
+
+            defStr = "";
+            defStr += "#define   " + makeDefineStr( bm["name"], "ADR" );
+            for i in range( len( defStr ), 55, 1 ):
+                defStr += " ";
+            defStr += str( bitAdr ) + 'U';
+            defStr += "\r\n";
+            bitAdresses += defStr;
+            bitAdr += 1;
+
         f.write("};\n")
     if (row.rw == "r"):
         f.write("const ")
@@ -347,9 +370,8 @@ for i in range( maxScale - minScale + 1 ):
         f.write(",");
     f.write(" ")
 f.write("};\n")
-
 f.close();
-#****** H ******
+#************************************** H **************************************
 maxConfigSize = maxUnitsLen*2 + 1 + maxLen*2 + maxBitMapSize*3;
 f = codecs.open("C:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8")
 f.write("/*\n")
@@ -435,7 +457,7 @@ f.write("  uint16_t*                value;                   // RW\n")
 f.write("  uint16_t                 units[MAX_UNITS_LENGTH]; // RW\n")
 f.write("} eConfigReg;\n")
 
-f.write("/*------------------------ Addresses -----------------------------------*/\n")
+f.write("/*---------------------- Register addresses ----------------------------*/\n")
 for row in map:
     strAdr = "";
     index  = 0;
@@ -449,6 +471,8 @@ for row in map:
     for i in range( len( strAdr ), 55, 1 ):
         f.write( " " );
     f.write( str( row.adr ) + 'U\n' );
+f.write("/*---------------------- Bitmap addresses ------------------------------*/\n");
+f.write( bitAdresses );
 f.write("/*------------------------- Extern -------------------------------------*/\n")
 for row in map:
     f.write("extern ");

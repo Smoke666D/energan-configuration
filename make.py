@@ -235,7 +235,8 @@ for row in map:
     else:
         f.write('[]\n')
     f.write('},')
-f.write('];')
+f.write('];\n');
+f.write('module.exports.dataReg = dataReg;');
 f.close()
 with open('config.json', 'w') as f:
     for row in map:

@@ -40,6 +40,7 @@ class bitMap:
         self.max   = 0xFFFF;
         self.str   = "";
         return;
+
 class register(object):
     def __init__( self ):
         self.adr        = 0;

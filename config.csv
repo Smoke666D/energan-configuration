@@ -17,7 +17,6 @@ oilPressureSensorType;0;11;1;;B;4;3;rw;Тип датчика
 oilPressureOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw;Контроль целостности цепи датчика
 oilPressureAlarmEnb;0;1;1;;B;1;1;rw;Аварийный останов
 oilPressurePreAlarmEnb;0;1;1;;B;1;0;rw;Предупредительный сигнал
-oilPressureUnitsEnb;0;1;1;;B;1;0;rw;Бар или Па
 oilPressureAlarmLevel;0;10,3;0.01;Бар;U;1;1,03;rw;Аварийный уровень двления масла
 oilPressurePreAlarmLevel;0;10,3;0.01;Бар;U;1;1,24;rw;Предупредительный уровень давления масла
 $3;;;;;;;;
@@ -140,7 +139,7 @@ genRatedApparentPowerLevel;0;10000;1;кВА;U;1;200;rw;Номинальная полная мощность 
 genRatedFrequencyLevel;0.3;74.7;0.1;Гц;U;1;50;rw;Номинальная частота генератора
 genCurrentPrimaryLevel;5;8000;1;А;U;1;600;rw;Первичный ток трансформатора
 genCurrentFullLoadRatingLevel;5;8000;1;А;U;1;500;rw;Полная номинальная нагрузка
-genCurrentTrasformRatioLevel;1;100;1;;U;1;1;rw;Коэффициент трансформатора тока
+genCurrentTrasformRatioLevel;5;1500;1;;U;1;1;rw;Коэффициент трансформатора тока
 $13 Напряжение генератора;;;;;;;;
 genAlarms;0;65535;1;;U;1;0;rw;Настройки событий генератора
 genUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал тревоги напряжения генратора
@@ -233,8 +232,6 @@ logPositiveEventsEnb;0;1;1;;B;1;1;rw;Сохранять предупреждения в журнале
 $21;;;;;;;;
 recordSetup;0;65535;1;;U;1;1;rw;Настройки измерений
 recordEnb;0;1;1;;B;1;0;rw;Активировать измерения
-recordTimeEnb;0;1;1;;B;1;0;rw;Активировать фиксации времени
-recordDateEnb;0;1;1;;B;1;0;rw;Активировать фиксации даты
 recordOilPressureEnb;0;1;1;;B;1;0;rw;Активировать фиксации давления масла
 recordCoolantTempEnb;0;1;1;;B;1;0;rw;Активировать фиксации температуры ОЖ
 recordFuelLevelEnb;0;1;1;;B;1;0;rw;Активировать фиксации уровень топлива

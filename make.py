@@ -108,6 +108,19 @@ def fix16_from_float( a ):
     else:
         temp += -0.5;
     return int( temp );
+
+def cyrillic2hex ( symbol ):
+    output = "0x0000";
+    if ( len( symbol ) == 1 ):
+        c   = symbol.encode( 'utf-8' );
+        if ( len(c) == 1 ):
+            output = hex( ord( symbol ) );
+            output = output[0:2] + "00" + output[2:];
+        else:
+            output = hex( (c[0] << 8) + c[1] );
+    output += 'U';
+    return output;
+
 #*******************************************************************************
 #*******************************************************************************
 #*******************************************************************************
@@ -305,10 +318,31 @@ for row in map:
     f.write( " };\n" );
     f.write( "const eConfigAttributes " + row.name + "Atrib =\n{\n" );
     f.write( "   .adr        = " + str( row.adr )   + "U,\n" );
+    if ( row.scale < minScale ):
+        minScale = row.scale;
+    if ( row.scale > maxScale ):
+        maxScale = row.scale;
+    if ( row.scale >= 0 ):
+        f.write( "   .scale      = " + str( int( row.scale ) ) + "U,\n" );
+    else:
+        f.write( "   .scale      = " + str(row.scale) + ",\n" );
     f.write( "   .min        = " + str( row.min )   + "U,\n" );
     if ( row.max > 65535 ):
         row.max = 65535;
     f.write( "   .max        = " + str( row.max )   + "U,\n" );
+    f.write( "   .units      = {" );
+    i = 0;
+    l = list( row.units );
+    while i < maxUnitsLen:
+        if len( row.units ) > i:
+            #f.write( "'" + l[i] + "'" );
+            f.write( cyrillic2hex( l[i] ) );
+        else:
+            f.write( "0x0020U" );
+        if i != ( maxUnitsLen - 1 ):
+            f.write( ", " );
+        i = i + 1;
+    f.write( "},\n" );
     if ( row.bitMapSize > 0 ):
         f.write( "   .type       = " + setClass( 'B' ) + ",\n" );
     else:
@@ -329,28 +363,8 @@ for row in map:
     postArray       += "&" + row.name + ", ";
     dictionaryArray += '"' + row.str + '", ';
     f.write( '{\n');
-    f.write( "   .atrib      = &" + row.name + "Atrib,\n" );
-    if ( row.scale < minScale ):
-        minScale = row.scale;
-    if ( row.scale > maxScale ):
-        maxScale = row.scale;
-    if ( row.scale >= 0 ):
-        f.write( "   .scale      = " + str( int( row.scale ) ) + "U,\n" );
-    else:
-        f.write( "   .scale      = " + str(row.scale) + ",\n" );
-    f.write( "   .value      = " + row.name + "Value,\n" );
-    f.write( "   .units      = {" );
-    i = 0;
-    l = list( row.units );
-    while i < maxUnitsLen:
-        if len( row.units ) > i:
-            f.write( "'" + l[i] + "'" );
-        else:
-            f.write( "' '" );
-        if i != ( maxUnitsLen - 1 ):
-            f.write( ", " );
-        i = i + 1;
-    f.write( "},\n" );
+    f.write( "   .atrib = &" + row.name + "Atrib,\n" );
+    f.write( "   .value = " + row.name + "Value,\n" );
     f.write( "};\n" );
     f.write( "/*----------------------------------------------------------------*/\n" );
 f.write( "\n" );
@@ -433,21 +447,21 @@ f.write( "} eConfigBitMap;\n" );
 f.write( "\n" );
 f.write( "typedef struct __packed\n" );
 f.write( "{\n" );
-f.write( "  uint16_t         adr;         // R\n" );
-f.write( "  uint16_t         min;         // R\n" );
-f.write( "  uint16_t         max;         // R\n" );
-f.write( "  CONFIG_TYPE      type;        // R\n" );
-f.write( "  uint8_t          len;         // R\n" );
-f.write( "  uint8_t          bitMapSize;  // R\n" );
-f.write( "  eConfigBitMap*   bitMap;      // R\n" );
+f.write( "  uint16_t              adr;                     // R\n" );
+f.write( "  uint16_t              min;                     // R\n" );
+f.write( "  uint16_t              max;                     // R\n" );
+f.write( "  int8_t                scale;                   // R\n" );
+f.write( "  uint16_t              units[MAX_UNITS_LENGTH]; // R\n" );
+f.write( "  CONFIG_TYPE           type;                    // R\n" );
+f.write( "  uint8_t               len;                     // R\n" );
+f.write( "  uint8_t               bitMapSize;              // R\n" );
+f.write( "  eConfigBitMap const*  bitMap;                  // R\n" );
 f.write( "} eConfigAttributes;\n" );
 f.write( "\n" );
 f.write( "typedef struct __packed\n" );
 f.write( "{\n" );
-f.write( "  const eConfigAttributes* atrib;                   // R\n" );
-f.write( "  int8_t                   scale;                   // RW\n" );
-f.write( "  uint16_t*                value;                   // RW\n" );
-f.write( "  uint16_t                 units[MAX_UNITS_LENGTH]; // RW\n" );
+f.write( "  eConfigAttributes const* atrib;  // R\n" );
+f.write( "  uint16_t*                value;  // RW\n" );
 f.write( "} eConfigReg;\n" );
 f.write( "/*---------------------- Register addresses ----------------------------*/\n" );
 for row in map:

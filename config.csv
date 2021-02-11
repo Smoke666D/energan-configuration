@@ -196,7 +196,7 @@ starterOilPressureCheckOnStartEnb;0;1;1;;B;1;1;rw;Проверка давления масла перед 
 starterStopOilPressureEnb;0;1;1;;B;1;0;rw;Отключение стартера по давлению масла
 starterStopChargeAlternatorEnb;0;1;1;;B;1;1;rw;Отключение стартера по напряжению зарядного генератора
 starterStopSpeedEnb;0;1;1;;B;1;0;rw;Отключени естартера по оборотам двигателя
-starterStopGenFreqLevel;0;40;0.1;Гц;U;1;21;rw;Отключить стартер по частоте генератора
+starterStopGenFreqLevel;15;40;0.1;Гц;U;1;21;rw;Отключить стартер по частоте генератора
 starterStopOilPressureLevel;0.5;4;0.1;Бар;U;1;2;rw;Давление масла отключения стартера
 starterStopChargeAlternatorLevel;0;40;0.1;В;U;1;6;rw;Напряжение зарядного генератора отключения стартаера
 starterStopSpeedLevel;0;6000;0.1;RPM;U;1;1500;rw;Обороты двигателя отключения стартера

@@ -355,7 +355,7 @@ for row in map:
         f.write( "   .bitMap     = NULL,\n" );
     if ( row.bitMapSize > maxBitMapSize ):
         maxBitMapSize = row.bitMapSize;
-    configStorageSize += ( row.len * 2 ) + ( maxUnitsLen * 2 ) + 2;
+    configStorageSize += ( row.len * 2 ) + 1;
     f.write( '};\n' );
     if ( row.rw == "r" ):
         f.write( "const " );
@@ -387,7 +387,6 @@ maxConfigSize = maxUnitsLen * 2 + 1 + maxLen * 2 + maxBitMapSize * 3;
 f = codecs.open( "C:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h","w+","utf-8" );
 f.write( "/*\n" );
 f.write( " * Configuration file from 'config.csv'\n" );
-f.write( " * Make time: " + time + "\n" );
 f.write( " */\n" );
 f.write( "/*----------------------------------------------------------------------*/\n" );
 f.write( "#ifndef INC_CONFIG_H_\n" );

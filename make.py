@@ -210,7 +210,7 @@ for row in map:
     else:
         f.write( '   "value": [' );
         for i in range( 0, row.len ):
-            if row.type == 'S':
+            if row.type == 'C':
                 f.write( "' '" );
             else:
                 f.write( str( ( row.value >> 16 * i ) & 0xFFFF ) );
@@ -219,7 +219,7 @@ for row in map:
         f.write( '],\n' );
         f.write( '   "default": [' );
         for i in range( 0, row.len ):
-            if row.type == 'S':
+            if row.type == 'C':
                 f.write( "' '" );
             else:
                 f.write( str( ( row.value >> 16 * i ) & 0xFFFF ) );
@@ -309,8 +309,8 @@ for row in map:
     totalSize += 17;
     for i in range( 0, row.len ):
         totalSize += 2;
-        if row.type == 'S':
-            f.write("' '");
+        if row.type == 'C':
+            f.write("0x0020U");
         else:
             f.write( str( ( row.value >> 16 * i ) & 0xFFFF ) + "U" );
         if i < ( row.len - 1 ):
@@ -330,7 +330,7 @@ for row in map:
     if ( row.max > 65535 ):
         row.max = 65535;
     f.write( "   .max        = " + str( row.max )   + "U,\n" );
-    f.write( "   .units      = {" );
+    f.write( "   .units      = { " );
     i = 0;
     l = list( row.units );
     while i < maxUnitsLen:
@@ -342,7 +342,7 @@ for row in map:
         if i != ( maxUnitsLen - 1 ):
             f.write( ", " );
         i = i + 1;
-    f.write( "},\n" );
+    f.write( " },\n" );
     if ( row.bitMapSize > 0 ):
         f.write( "   .type       = " + setClass( 'B' ) + ",\n" );
     else:

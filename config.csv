@@ -24,10 +24,12 @@ coolantTempSetup;0;63;1;;U;1;0;rw;Настройки температуры ОЖ
 coolantTempSensorType;0;11;1;;B;4;3;rw;Тип дптчика
 coolantTempOpenCircuitAlarmEnb;0;1;1;;B;1;1;rw;Контроль целостности цепи датчика
 coolantHightTempAlarmEnb;0;1;1;;B;1;1;rw;Аварийный сигнал тревоги
+coolantHightTempElectroAlarmEnb;0;1;1;;B;1;1;rw;Сигнал на электрическое отключение
 coolantHightTempPreAlarmEnb;0;1;1;;B;1;0;rw;Предупредительный сигнал тревоги
 coolantTempHeaterEnb;0;1;1;;B;1;0;rw;Управление нагревателем ОЖ
 coolantTempCoolerEnb;0;1;1;;B;1;0;rw;Управление охладителем ОЖ
 coolantHightTempAlarmLevel;0;250;1;C;U;1;96;rw;Аварийный уровень температуры ОЖ
+coolantHightTempElectroAlarmLevel;0;250;1;C;U;1;92;rw;Плановой остановки уровень температуры ОЖ
 coolantHightTempPreAlarmLevel;0;250;1;C;U;1;90;rw;Предупредительный уровень температуры ОЖ 
 coolantTempHeaterOffLevel;0;250;1;C;U;1;60;rw;Уровень отключения нагревателя ОЖ
 coolantTempHeaterOnLevel;0;250;1;C;U;1;10;rw;Уровень включения нагревателя ОЖ
@@ -66,7 +68,7 @@ diaPolarity;0;1;1;;B;1;0;rw;Полярность
 diaAction;0;3;1;;B;2;0;rw;Действие
 diaArming;0;4;1;;B;2;0;rw;Срабатывание
 diaDelay;0;60;1;сек;U;1;15;rw;Задержка
-diaMessage;0;0;1;;S;16;0;rw;Сообщение
+diaMessage;0;0;1;;C;16;0;rw;Сообщение
 $7;;;;;;;;
 dibSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа B
 dibFunction;0;27;1;;B;5;0;rw;Функция
@@ -74,7 +76,7 @@ dibPolarity;0;1;1;;B;1;0;rw;Полярность
 dibAction;0;3;1;;B;2;0;rw;Действие
 dibArming;0;4;1;;B;2;0;rw;Срабатывание
 dibDelay;0;60;1;сек;U;1;15;rw;Задержка
-dibMessage;0;0;1;;S;16;0;rw;Сообщение
+dibMessage;0;0;1;;C;16;0;rw;Сообщение
 $8;;;;;;;;
 dicSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа C
 dicFunction;0;27;1;;B;5;0;rw;Функция
@@ -82,7 +84,7 @@ dicPolarity;0;1;1;;B;1;0;rw;Полярность
 dicAction;0;3;1;;B;2;0;rw;Действие
 dicArming;0;4;1;;B;2;0;rw;Срабатывание
 dicDelay;0;60;1;сек;U;1;15;rw;Задержка
-dicMessage;0;0;1;;S;16;0;rw;Сообщение
+dicMessage;0;0;1;;C;16;0;rw;Сообщение
 $9;;;;;;;;
 didSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа D
 didFunction;0;27;1;;B;5;0;rw;Функция
@@ -90,7 +92,7 @@ didPolarity;0;1;1;;B;1;0;rw;Полярность
 didAction;0;3;1;;B;2;1;rw;Действие
 didArming;0;4;1;;B;2;0;rw;Срабатывание
 didDelay;0;60;1;сек;U;1;15;rw;Задержка
-didMessage;0;0;1;;S;16;0;rw;Сообщение
+didMessage;0;0;1;;C;16;0;rw;Сообщение
 $10;;;;;;;;
 doSetup;0;1023;1;;U;1;0;rw;Настройки цифровых выходов
 doaNOC;0;1;1;;B;1;0;rw;Полярность цифровых выхода A
@@ -139,7 +141,8 @@ genRatedApparentPowerLevel;0;10000;1;кВА;U;1;200;rw;Номинальная полная мощность 
 genRatedFrequencyLevel;0.3;74.7;0.1;Гц;U;1;50;rw;Номинальная частота генератора
 genCurrentPrimaryLevel;5;8000;1;А;U;1;600;rw;Первичный ток трансформатора
 genCurrentFullLoadRatingLevel;5;8000;1;А;U;1;500;rw;Полная номинальная нагрузка
-genCurrentTrasformRatioLevel;5;1500;1;;U;1;1;rw;Коэффициент трансформатора тока
+genCurrentTrasformRatioLevel;1;1500;1;;U;1;1;rw;Коэффициент трансформатора тока
+genPoleQuantity;1;12;1;шт;U;1;2;rw;Количество полюсов генератора
 $13 Напряжение генератора;;;;;;;;
 genAlarms;0;65535;1;;U;1;0;rw;Настройки событий генератора
 genUnderVoltageAlarmEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал тревоги напряжения генратора
@@ -204,16 +207,13 @@ $18;;;;;;;;
 batteryAlarms;0;15;1;;U;1;0;rw;Настройки событий АКБ
 batteryUnderVoltageEnb;0;1;1;;B;1;1;rw;Нижний аварийный сигнал напряжения АКБ
 batteryOverVoltageEnb;0;1;1;;B;1;1;rw;Верхний аварийный сигнал напряжения АКБ
-batteryChargeShutdownEnb;0;1;1;;B;1;1;rw;Аварийный сигнал зарядного генератора
-batteryChargeWarningEnb;0;1;1;;B;1;1;rw;Предупредительный сигнал зарядного генреатора
+batteryChargeAlarmEnb;0;1;1;;B;1;1;rw;Аварийный сигнал зарядного генератора
 batteryUnderVoltageLevel;0;39.7;0.1;В;U;1;10;rw;Нижний аварийный уровень напряжения АКБ
 batteryUnderVoltageDelay;0;86400;1;сек;U;1;60;rw;Задержка нижнего аварийного сигнала напряжения АКБ
 batteryOverVoltageLevel;0.3;40;0.1;В;U;1;30;rw;Верхний аварийный уровень напряжения АКБ 
 batteryOverVoltageDelay;0;86400;1;сек;U;1;60;rw;Задержка верхнего аварийного сигнала напряжения АКБ
-batteryChargeShutdownLevel;0;38.9;0.1;В;U;1;4;rw;Уровень аварийного сигнала зарядного генератора
-batteryChargeShutdownDelay;0;3600;1;сек;U;1;5;rw;Задержка аварийного сигнала зарядного генератора
-batteryChargeWarningLevel;0.1;39;0.1;В;U;1;6;rw;Уровень предупредительного сигнала зарядного генератора
-batteryChargeWarningDelay;0;3600;1;сек;U;1;5;rw;Задержка предупредительного сигнала зарядного генератора
+batteryChargeAlarmLevel;0;38.9;0.1;В;U;1;4;rw;Уровень аварийного сигнала зарядного генератора
+batteryChargeAlarmDelay;0;3600;1;сек;U;1;5;rw;Задержка аварийного сигнала зарядного генератора
 $19;;;;;;;;
 maintenanceAlarms;0;63;1;;U;1;0;rw;Настройки событий ТО
 maintenanceAlarmOilEnb;0;1;1;;B;1;0;rw;Сигнал ТО масло

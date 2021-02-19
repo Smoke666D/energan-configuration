@@ -128,7 +128,7 @@ print( '******** Read CSV file ********' );
 # Read raw data
 rawData  = [];
 freeList = [];
-with open( 'config.csv' ) as file:
+with open( 'config.csv', mode='r', encoding='utf-8' ) as file:
     reader  = csv.DictReader( file, delimiter=';' );
     headers = reader.fieldnames;
     registerCounter = 0;

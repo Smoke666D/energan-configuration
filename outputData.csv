@@ -1,47 +1,47 @@
-name,min,max,scale,units,type,length,default,rw,str,
-oilPressure,0,"10,00",0.01,Бар,U,1,0,r,Давление масла,
-coolantTemp,0,300,1,С,U,1,0,r,Температура ОЖ,
-fuelLevel,0,100,1,%,U,1,0,r,Уровень топлива,
-speedLevel,0,6000,1,RPM,U,1,0,r,Скорость двигателя,
-mainsPhaseVoltageL1,0,800,1,В,U,1,0,r,Фазное напряжение сети L1,
-mainsPhaseVoltageL2,0,800,1,В,U,1,0,r,Фазное напряжение сети L2,
-mainsPhaseVoltageL3,0,800,1,В,U,1,0,r,Фазное напряжение сети L3,
-mainsLineVoltageL1,0,800,1,В,U,1,0,r,Линейное напряжение сети L1,
-mainsLineVoltageL2,0,800,1,В,U,1,0,r,Линейное напряжение сети L2,
-mainsLineVoltageL3,0,800,1,В,U,1,0,r,Линейное напряжение сети L3,
-mainsFreq,0,75,0.1,Гц,U,1,0,r,Частота сети,
-generatorPhaseVoltageL1,0,800,1,В,U,1,0,r,Фазное напряжение генератора L1,
-generatorPhaseVoltageL2,0,800,1,В,U,1,0,r,Фазное напряжение генератора L2,
-generatorPhaseVoltageL3,0,800,1,В,U,1,0,r,Фазное напряжение генератора L3,
-generatorLineVoltageL1,0,800,1,В,U,1,0,r,Линейное напряжение генератора L1,
-generatorLineVoltageL2,0,800,1,В,U,1,0,r,Линейное напряжение генератора L2,
-generatorLineVoltageL3,0,800,1,В,U,1,0,r,Линейное напряжение генератора L3,
-generatorCurrentL1,0,1500,1,А,U,1,0,r,Ток генератора L1,
-generatorCurrentL2,0,1500,1,А,U,1,0,r,Ток генератора L2,
-generatorCurrentL3,0,1500,1,А,U,1,0,r,Ток генератора L3,
-generatorFreq,0,75,0.1,Гц,U,1,0,r,Частота генератора,
-generatorCosFi,0,1,0.01,,U,1,0,r,Cos F генератора,
-generatorPowerActive,0,1000,1,кВт,U,1,0,r,Активная мощность генератора,
-generatorPowerReactive,0,1000,1,кВАР,U,1,0,r,Реактивная мощность генератора,
-generatorPowerFull,0,1000,1,кВА,U,1,0,r,Полная мощность генератора,
-batteryVoltage,0,40,0.1,В,U,1,0,r,Напряжение АКБ,
-controll,0,0,1,,U,1,0,rw,Регистр управления,
-controllSwitchMode,0,1,1,,B,1,0,rw,Смена режима,
-controllRemoteStart,0,1,1,,B,1,0,rw,Дистанционный пуск,
-controllBanAutoStart,0,1,1,,B,1,0,rw,Запрет автоматического запуска,
-controllBanGeneratorLoad,0,1,1,,B,1,0,rw,Запрет отключения генератора,Запрет возврата на сеть
-controllBanAutoShutdown,0,1,1,,B,1,0,rw,Запрет автоматического отключения,
-controllGoToIdling,0,1,1,,B,1,0,rw,Переход на холостые обороты,
-status,0,0,1,,U,1,0,r,Регистр статуса,
-statusAlarm,0,1,1,,B,1,0,r,Авария,
-statusWarning,0,1,1,,B,1,0,r,Предупреждение,
-statusMainsFail,0,1,1,,B,1,0,r,Ошибка сети,
-statusDPSready,0,1,1,,B,1,0,r,ДВС готов,
-statusReadyToStart,0,1,1,,B,1,0,r,Готов к запуску,
-statusGeneratorRedy,0,1,1,,B,1,0,r,Генератор готов,
-logAdr,0,0,1,,U,1,0,rw,Адрес записи в журнале,
-logRecordData0,0,0,1,,U,1,0,r,Дата записи журнала 0,
-logRecordData1,0,0,1,,U,1,0,r,Дата записи журнала 1,
-logRecordEvent,0,0,1,,U,1,0,r,Событие записи журнала,
-errorAdr,0,0,1,,U,1,0,rw,Адрес ошибки,
-errorRecord,0,0,1,,U,1,0,r,Событие ошибки,
+name;min;max;scale;units;type;length;default;rw;str
+oilPressure;0;10.00;0.01;Бар;U;1;0;r;Давление масла
+coolantTemp;0;300;1;С;U;1;0;r;Температура ОЖ
+fuelLevel;0;100;1;%;U;1;0;r;Уровень топлива
+speedLevel;0;6000;1;RPM;U;1;0;r;Скорость двигателя
+mainsPhaseVoltageL1;0;800;1;В;U;1;0;r;Фазное напряжение сети L1
+mainsPhaseVoltageL2;0;800;1;В;U;1;0;r;Фазное напряжение сети L2
+mainsPhaseVoltageL3;0;800;1;В;U;1;0;r;Фазное напряжение сети L3
+mainsLineVoltageL1;0;800;1;В;U;1;0;r;Линейное напряжение сети L1
+mainsLineVoltageL2;0;800;1;В;U;1;0;r;Линейное напряжение сети L2
+mainsLineVoltageL3;0;800;1;В;U;1;0;r;Линейное напряжение сети L3
+mainsFreq;0;75;0.1;Гц;U;1;0;r;Частота сети
+generatorPhaseVoltageL1;0;800;1;В;U;1;0;r;Фазное напряжение генератора L1
+generatorPhaseVoltageL2;0;800;1;В;U;1;0;r;Фазное напряжение генератора L2
+generatorPhaseVoltageL3;0;800;1;В;U;1;0;r;Фазное напряжение генератора L3
+generatorLineVoltageL1;0;800;1;В;U;1;0;r;Линейное напряжение генератора L1
+generatorLineVoltageL2;0;800;1;В;U;1;0;r;Линейное напряжение генератора L2
+generatorLineVoltageL3;0;800;1;В;U;1;0;r;Линейное напряжение генератора L3
+generatorCurrentL1;0;1500;1;А;U;1;0;r;Ток генератора L1
+generatorCurrentL2;0;1500;1;А;U;1;0;r;Ток генератора L2
+generatorCurrentL3;0;1500;1;А;U;1;0;r;Ток генератора L3
+generatorFreq;0;75;0.1;Гц;U;1;0;r;Частота генератора
+generatorCosFi;0;1;0.01;;U;1;0;r;Cos F генератора
+generatorPowerActive;0;1000;1;кВт;U;1;0;r;Активная мощность генератора
+generatorPowerReactive;0;1000;1;кВАР;U;1;0;r;Реактивная мощность генератора
+generatorPowerFull;0;1000;1;кВА;U;1;0;r;Полная мощность генератора
+batteryVoltage;0;40;0.1;В;U;1;0;r;Напряжение АКБ
+controll;0;0;1;;U;1;0;rw;Регистр управления
+controllSwitchMode;0;1;1;;B;1;0;rw;Смена режима
+controllRemoteStart;0;1;1;;B;1;0;rw;Дистанционный пуск
+controllBanAutoStart;0;1;1;;B;1;0;rw;Запрет автоматического запуска
+controllBanGeneratorLoad;0;1;1;;B;1;0;rw;Запрет отключения генератора
+controllBanAutoShutdown;0;1;1;;B;1;0;rw;Запрет автоматического отключения
+controllGoToIdling;0;1;1;;B;1;0;rw;Переход на холостые обороты
+status;0;0;1;;U;1;0;r;Регистр статуса
+statusAlarm;0;1;1;;B;1;0;r;Авария
+statusWarning;0;1;1;;B;1;0;r;Предупреждение
+statusMainsFail;0;1;1;;B;1;0;r;Ошибка сети
+statusDPSready;0;1;1;;B;1;0;r;ДВС готов
+statusReadyToStart;0;1;1;;B;1;0;r;Готов к запуску
+statusGeneratorRedy;0;1;1;;B;1;0;r;Генератор готов
+logAdr;0;0;1;;U;1;0;rw;Адрес записи в журнале
+logRecordData0;0;0;1;;U;1;0;r;Дата записи журнала 0
+logRecordData1;0;0;1;;U;1;0;r;Дата записи журнала 1
+logRecordEvent;0;0;1;;U;1;0;r;Событие записи журнала
+errorAdr;0;0;1;;U;1;0;rw;Адрес ошибки
+errorRecord;0;0;1;;U;1;0;r;Событие ошибки

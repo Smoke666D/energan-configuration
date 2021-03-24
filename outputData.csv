@@ -1,47 +1,76 @@
 name;min;max;scale;units;type;length;default;rw;str
-oilPressure;0;10.00;0.01;Бар;U;1;0;r;Давление масла
-coolantTemp;0;300;1;С;U;1;0;r;Температура ОЖ
-fuelLevel;0;100;1;%;U;1;0;r;Уровень топлива
-speedLevel;0;6000;1;RPM;U;1;0;r;Скорость двигателя
-mainsPhaseVoltageL1;0;800;1;В;U;1;0;r;Фазное напряжение сети L1
-mainsPhaseVoltageL2;0;800;1;В;U;1;0;r;Фазное напряжение сети L2
-mainsPhaseVoltageL3;0;800;1;В;U;1;0;r;Фазное напряжение сети L3
-mainsLineVoltageL1;0;800;1;В;U;1;0;r;Линейное напряжение сети L1
-mainsLineVoltageL2;0;800;1;В;U;1;0;r;Линейное напряжение сети L2
-mainsLineVoltageL3;0;800;1;В;U;1;0;r;Линейное напряжение сети L3
-mainsFreq;0;75;0.1;Гц;U;1;0;r;Частота сети
-generatorPhaseVoltageL1;0;800;1;В;U;1;0;r;Фазное напряжение генератора L1
-generatorPhaseVoltageL2;0;800;1;В;U;1;0;r;Фазное напряжение генератора L2
-generatorPhaseVoltageL3;0;800;1;В;U;1;0;r;Фазное напряжение генератора L3
-generatorLineVoltageL1;0;800;1;В;U;1;0;r;Линейное напряжение генератора L1
-generatorLineVoltageL2;0;800;1;В;U;1;0;r;Линейное напряжение генератора L2
-generatorLineVoltageL3;0;800;1;В;U;1;0;r;Линейное напряжение генератора L3
-generatorCurrentL1;0;1500;1;А;U;1;0;r;Ток генератора L1
-generatorCurrentL2;0;1500;1;А;U;1;0;r;Ток генератора L2
-generatorCurrentL3;0;1500;1;А;U;1;0;r;Ток генератора L3
-generatorFreq;0;75;0.1;Гц;U;1;0;r;Частота генератора
-generatorCosFi;0;1;0.01;;U;1;0;r;Cos F генератора
-generatorPowerActive;0;1000;1;кВт;U;1;0;r;Активная мощность генератора
-generatorPowerReactive;0;1000;1;кВАР;U;1;0;r;Реактивная мощность генератора
-generatorPowerFull;0;1000;1;кВА;U;1;0;r;Полная мощность генератора
-batteryVoltage;0;40;0.1;В;U;1;0;r;Напряжение АКБ
+oilPressure;0;10.00;0.01;Бар;U;1;0;rw;Давление масла
+coolantTemp;0;300;1;С;U;1;0;rw;Температура ОЖ
+fuelLevel;0;100;1;%;U;1;0;rw;Уровень топлива
+speedLevel;0;6000;1;RPM;U;1;0;rw;Скорость двигателя
+mainsPhaseVoltageL1;0;800;1;В;U;1;0;rw;Фазное напряжение сети L1
+mainsPhaseVoltageL2;0;800;1;В;U;1;0;rw;Фазное напряжение сети L2
+mainsPhaseVoltageL3;0;800;1;В;U;1;0;rw;Фазное напряжение сети L3
+mainsLineVoltageL1;0;800;1;В;U;1;0;rw;Линейное напряжение сети L1
+mainsLineVoltageL2;0;800;1;В;U;1;0;rw;Линейное напряжение сети L2
+mainsLineVoltageL3;0;800;1;В;U;1;0;rw;Линейное напряжение сети L3
+mainsFreq;0;75;0.1;Гц;U;1;0;rw;Частота сети
+generatorPhaseVoltageL1;0;800;1;В;U;1;0;rw;Фазное напряжение генератора L1
+generatorPhaseVoltageL2;0;800;1;В;U;1;0;rw;Фазное напряжение генератора L2
+generatorPhaseVoltageL3;0;800;1;В;U;1;0;rw;Фазное напряжение генератора L3
+generatorLineVoltageL1;0;800;1;В;U;1;0;rw;Линейное напряжение генератора L1
+generatorLineVoltageL2;0;800;1;В;U;1;0;rw;Линейное напряжение генератора L2
+generatorLineVoltageL3;0;800;1;В;U;1;0;rw;Линейное напряжение генератора L3
+generatorCurrentL1;0;1500;1;А;U;1;0;rw;Ток генератора L1
+generatorCurrentL2;0;1500;1;А;U;1;0;rw;Ток генератора L2
+generatorCurrentL3;0;1500;1;А;U;1;0;rw;Ток генератора L3
+generatorFreq;0;75;0.1;Гц;U;1;0;rw;Частота генератора
+generatorCosFi;0;1;0.01;;U;1;0;rw;Cos F генератора
+generatorPowerActive;0;1000;1;кВт;U;1;0;rw;Активная мощность генератора
+generatorPowerReactive;0;1000;1;кВАР;U;1;0;rw;Реактивная мощность генератора
+generatorPowerFull;0;1000;1;кВА;U;1;0;rw;Полная мощность генератора
+batteryVoltage;0;40;0.1;В;U;1;0;rw;Напряжение АКБ
+digitalOutput;0;0;1;;U;1;0;rw;Цифровые выходы
+digitalOutputA;0;1;1;;B;1;0;rw;Цифровой выход A
+digitalOutputB;0;1;1;;B;1;0;rw;Цифровой выход B
+digitalOutputC;0;1;1;;B;1;0;rw;Цифровой выход C
+digitalOutputD;0;1;1;;B;1;0;rw;Цифровой выход D
+digitalOutputE;0;1;1;;B;1;0;rw;Цифровой выход E
+digitalOutputF;0;1;1;;B;1;0;rw;Цифровой выход F
+digitalOutputG;0;1;1;;B;1;0;rw;Цифровой выход G
+digitalOutputH;0;1;1;;B;1;0;rw;Цифровой выход H
+digitalOutputI;0;1;1;;B;1;0;rw;Цифровой выход I
+digitalOutputJ;0;1;1;;B;1;0;rw;Цифровой выход J
+digitalOutputK;0;1;1;;B;1;0;rw;Цифровой выход K
+digitalOutputL;0;1;1;;B;1;0;rw;Цифровой выход L
+digitalInput;0;0;1;;U;1;0;rw;Цифровые входы
+digitalInputA;0;1;1;;B;1;0;rw;Цифровой вход A
+digitalInputB;0;1;1;;B;1;0;rw;Цифровой вход B
+digitalInputC;0;1;1;;B;1;0;rw;Цифровой вход C
+digitalInputD;0;1;1;;B;1;0;rw;Цифровой вход D
+digitalInputE;0;1;1;;B;1;0;rw;Цифровой вход E
+digitalInputF;0;1;1;;B;1;0;rw;Цифровой вход F
+digitalInputG;0;1;1;;B;1;0;rw;Цифровой вход G
+digitalInputH;0;1;1;;B;1;0;rw;Цифровой вход H
+digitalInputI;0;1;1;;B;1;0;rw;Цифровой вход I
+digitalInputJ;0;1;1;;B;1;0;rw;Цифровой вход J
+digitalInputK;0;1;1;;B;1;0;rw;Цифровой вход K
+digitalInputL;0;1;1;;B;1;0;rw;Цифровой вход L
+status;0;0;1;;U;1;0;rw;Регистр статуса
+statusAlarm;0;1;1;;B;1;0;rw;Авария
+statusWarning;0;1;1;;B;1;0;rw;Предупреждение
+statusMainsFail;0;1;1;;B;1;0;rw;Ошибка сети
+statusDPSready;0;1;1;;B;1;0;rw;ДВС готов
+statusReadyToStart;0;1;1;;B;1;0;rw;Готов к запуску
+statusGeneratorRedy;0;1;1;;B;1;0;rw;Генератор готов
+logLen;0;0;1;;U;1;0;rw;Кол-во записей в журнале
+errorLen;0;0;1;;U;1;0;rw;Кол-во ошибок
+logRecordData0;0;0;1;;U;1;0;rw;Дата записи журнала 0
+logRecordData1;0;0;1;;U;1;0;rw;Дата записи журнала 1
+logRecordEvent;0;0;1;;U;1;0;rw;Событие записи журнала
+errorRecordData0;0;0;1;;U;1;0;rw;Дата ошибки 0
+errorRecordData1;0;0;1;;U;1;0;rw;Дата ошибки 1
+errorRecordEvent;0;0;1;;U;1;0;rw;Событие ошибки
 controll;0;0;1;;U;1;0;rw;Регистр управления
 controllSwitchMode;0;1;1;;B;1;0;rw;Смена режима
-controllRemoteStart;0;1;1;;B;1;0;rw;Дистанционный пуск
-controllBanAutoStart;0;1;1;;B;1;0;rw;Запрет автоматического запуска
-controllBanGeneratorLoad;0;1;1;;B;1;0;rw;Запрет отключения генератора
-controllBanAutoShutdown;0;1;1;;B;1;0;rw;Запрет автоматического отключения
-controllGoToIdling;0;1;1;;B;1;0;rw;Переход на холостые обороты
-status;0;0;1;;U;1;0;r;Регистр статуса
-statusAlarm;0;1;1;;B;1;0;r;Авария
-statusWarning;0;1;1;;B;1;0;r;Предупреждение
-statusMainsFail;0;1;1;;B;1;0;r;Ошибка сети
-statusDPSready;0;1;1;;B;1;0;r;ДВС готов
-statusReadyToStart;0;1;1;;B;1;0;r;Готов к запуску
-statusGeneratorRedy;0;1;1;;B;1;0;r;Генератор готов
+controllStart;0;1;1;;B;1;0;rw;Пуск
+controllStop;0;1;1;;B;1;0;rw;Стоп
+controllResetErrors;0;1;1;;B;1;0;rw;Сброс ошибок
+controllSwitchLoad;0;1;1;;B;1;0;rw;Переключение нагрузки
 logAdr;0;0;1;;U;1;0;rw;Адрес записи в журнале
-logRecordData0;0;0;1;;U;1;0;r;Дата записи журнала 0
-logRecordData1;0;0;1;;U;1;0;r;Дата записи журнала 1
-logRecordEvent;0;0;1;;U;1;0;r;Событие записи журнала
 errorAdr;0;0;1;;U;1;0;rw;Адрес ошибки
-errorRecord;0;0;1;;U;1;0;r;Событие ошибки

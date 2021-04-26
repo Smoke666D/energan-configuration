@@ -25,6 +25,13 @@ generatorPowerActive;0;1000;1;кВт;U;1;0;rw;Активная мощность 
 generatorPowerReactive;0;1000;1;кВАР;U;1;0;rw;Реактивная мощность генератора
 generatorPowerFull;0;1000;1;кВА;U;1;0;rw;Полная мощность генератора
 batteryVoltage;0;40;0.1;В;U;1;0;rw;Напряжение АКБ
+chargerVoltage;0;40;0.1;В;U;1;0;rw;Напряжение зарядного генератора
+externalDevices;0;0;1;;U;1;0;rw;Внешние устройства
+externalCharger;0;1;1;;B;1;0;rw;Статус возбуждения зарядного генератора
+externalCoolantHeater;0;1;1;;B;1;0;rw;Статус нагревателя ОЖ
+externalCoolantCooler;0;1;1;;B;1;0;rw;Статус охладителя ОЖ
+externalFuelPump;0;1;1;;B;1;0;rw;Статус подкачки топлива
+externalPreHeater;0;1;1;;B;1;0;rw;Статус свечей накаливания
 digitalOutput;0;0;1;;U;1;0;rw;Цифровые выходы
 digitalOutputA;0;1;1;;B;1;0;rw;Цифровой выход A
 digitalOutputB;0;1;1;;B;1;0;rw;Цифровой выход B
@@ -51,6 +58,7 @@ digitalInputI;0;1;1;;B;1;0;rw;Цифровой вход I
 digitalInputJ;0;1;1;;B;1;0;rw;Цифровой вход J
 digitalInputK;0;1;1;;B;1;0;rw;Цифровой вход K
 digitalInputL;0;1;1;;B;1;0;rw;Цифровой вход L
+deviceStatus;0;0;1;;U;1;0;rw;Статус
 status;0;0;1;;U;1;0;rw;Регистр статуса
 statusAlarm;0;1;1;;B;1;0;rw;Авария
 statusWarning;0;1;1;;B;1;0;rw;Предупреждение
@@ -59,18 +67,70 @@ statusDPSready;0;1;1;;B;1;0;rw;ДВС готов
 statusReadyToStart;0;1;1;;B;1;0;rw;Готов к запуску
 statusGeneratorRedy;0;1;1;;B;1;0;rw;Генератор готов
 logLen;0;0;1;;U;1;0;rw;Кол-во записей в журнале
-errorLen;0;0;1;;U;1;0;rw;Кол-во ошибок
+logAdr;0;0;1;;U;1;0;rw;Адрес записи в журнале
 logRecordData0;0;0;1;;U;1;0;rw;Дата записи журнала 0
 logRecordData1;0;0;1;;U;1;0;rw;Дата записи журнала 1
 logRecordEvent;0;0;1;;U;1;0;rw;Событие записи журнала
-errorRecordData0;0;0;1;;U;1;0;rw;Дата ошибки 0
-errorRecordData1;0;0;1;;U;1;0;rw;Дата ошибки 1
-errorRecordEvent;0;0;1;;U;1;0;rw;Событие ошибки
+error0;0;0;1;;U;1;0;rw;-
+errorExternEmegencyStop;0;1;1;;B;1;0;rw;0
+errorStartFail;0;1;1;;B;1;0;rw;1
+errorStopFail;0;1;1;;B;1;0;rw;2
+errorOilLowPressure;0;1;1;;B;1;0;rw;3
+errorOilSensor;0;1;1;;B;1;0;rw;4
+errorTempHight;0;1;1;;B;1;0;rw;5
+errorTempSensor;0;1;1;;B;1;0;rw;6
+errorFuelLowLevel;0;1;1;;B;1;0;rw;7
+errorFuelHightLevel;0;1;1;;B;1;0;rw;8
+errorFuelSensor;0;1;1;;B;1;0;rw;9
+errorSpeedHight;0;1;1;;B;1;0;rw;10
+errorSpeedLow;0;1;1;;B;1;0;rw;11
+errorSpeedSensor;0;1;1;;B;1;0;rw;12
+errorGenLowVoltage;0;1;1;;B;1;0;rw;13
+errorGenHightVoltage;0;1;1;;B;1;0;rw;14
+errorGenLowFreq;0;1;1;;B;1;0;rw;15
+error1;0;0;1;;U;1;0;rw;-
+errorGenHightFreq;0;1;1;;B;1;0;rw;0
+errorGenPhaseSeq;0;1;1;;B;1;0;rw;1
+errorPhaseImbalance;0;1;1;;B;1;0;rw;2
+errorOverCurrent;0;1;1;;B;1;0;rw;3
+errorOverPower;0;1;1;;B;1;0;rw;4
+errorShortCircuit;0;1;1;;B;1;0;rw;5
+errorMainsPhaseSeq;0;1;1;;B;1;0;rw;6
+errorMaintenanceOil;0;1;1;;B;1;0;rw;7
+errorMaintenanceAir;0;1;1;;B;1;0;rw;8
+errorMaintenanceFuel;0;1;1;;B;1;0;rw;9
+errorSensorCommon;0;1;1;;B;1;0;rw;10
+errorIterruptedStart;0;1;1;;B;1;0;rw;11
+errorIterruptedStop;0;1;1;;B;1;0;rw;12
+errorUserA;0;1;1;;B;1;0;rw;13
+errorUserB;0;1;1;;B;1;0;rw;14
+errorUserC;0;1;1;;B;1;0;rw;15
+error2;0;0;1;;U;1;0;rw;-
+errorUserD;0;1;1;;B;1;0;rw;0
+warning0;0;0;1;;U;1;0;rw;-
+warningMainsLowVoltage;0;1;1;;B;1;0;rw;0
+warningMainsHightVoltage;0;1;1;;B;1;0;rw;1
+warningMainsLowFreq;0;1;1;;B;1;0;rw;2
+warningMainsHightFreq;0;1;1;;B;1;0;rw;3
+warningGenLowVoltage;0;1;1;;B;1;0;rw;4
+warningGenHightVoltage;0;1;1;;B;1;0;rw;5
+warningGenLowFreq;0;1;1;;B;1;0;rw;6
+warningGenHightFreq;0;1;1;;B;1;0;rw;7
+warningBatteryLow;0;1;1;;B;1;0;rw;8
+warningBatteryHight;0;1;1;;B;1;0;rw;9
+warningOverCurrent;0;1;1;;B;1;0;rw;10
+warningChargerFail;0;1;1;;B;1;0;rw;11
+warningFuelLowLevel;0;1;1;;B;1;0;rw;12
+warningFuelHightLevel;0;1;1;;B;1;0;rw;13
+warningTempHight;0;1;1;;B;1;0;rw;14
+warningOilLowPressure;0;1;1;;B;1;0;rw;15
+warning1;0;0;1;;U;1;0;rw;-
+warningMaintenanceOil;0;1;1;;B;1;0;rw;0
+warningMaintenanceAir;0;1;1;;B;1;0;rw;1
+warningMaintenanceFuel;0;1;1;;B;1;0;rw;2
 controll;0;0;1;;U;1;0;rw;Регистр управления
 controllSwitchMode;0;1;1;;B;1;0;rw;Смена режима
 controllStart;0;1;1;;B;1;0;rw;Пуск
 controllStop;0;1;1;;B;1;0;rw;Стоп
 controllResetErrors;0;1;1;;B;1;0;rw;Сброс ошибок
 controllSwitchLoad;0;1;1;;B;1;0;rw;Переключение нагрузки
-logAdr;0;0;1;;U;1;0;rw;Адрес записи в журнале
-errorAdr;0;0;1;;U;1;0;rw;Адрес ошибки

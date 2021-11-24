@@ -75,11 +75,6 @@ statusMainsFail;0;1;1;;B;1;0;rw;Ошибка сети
 statusDPSready;0;1;1;;B;1;0;rw;ДВС готов
 statusReadyToStart;0;1;1;;B;1;0;rw;Готов к запуску
 statusGeneratorRedy;0;1;1;;B;1;0;rw;Генератор готов
-logLen;0;0;1;;U;1;0;rw;Кол-во записей в журнале
-logAdr;0;0;1;;U;1;0;rw;Адрес записи в журнале
-logRecordData0;0;0;1;;U;1;0;rw;Дата записи журнала 0
-logRecordData1;0;0;1;;U;1;0;rw;Дата записи журнала 1
-logRecordEvent;0;0;1;;U;1;0;rw;Событие записи журнала
 error0;0;0;1;;U;1;0;rw;-
 errorExternEmegencyStop;0;1;1;;B;1;0;rw;0
 errorStartFail;0;1;1;;B;1;0;rw;1

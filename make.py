@@ -612,11 +612,11 @@ if __name__ == "__main__":
     map = [];
     [map, maxUnitsLen, maxRegNumber, regNumber] = readCSV( 'config.csv' );
     makeJSON( map, 'C:\PROJECTS\ENERGAN\web-face\js\config.js', 'dataReg' );
-    metaData  = makeC_config( map, 'C:\PROJECTS\ENERGAN\energan_enb\data\Src\config.c', 'config' );
-    makeH_config ( map, metaData, 'C:\PROJECTS\ENERGAN\energan_enb\data\Inc\config.h' );
+    metaData  = makeC_config( map, 'C:\PROJECTS\ENERGAN\energan-configuration\out\config.c', 'config' );
+    makeH_config ( map, metaData, 'C:\PROJECTS\ENERGAN\energan-configuration\out\config.h' );
     print( ">>Total size: " + str( metaData.totalSize ) );
 
     [map, maxUnitsLen, maxRegNumber, regNumber]  = readCSV( 'outputData.csv' );
     makeJSON( map, 'C:\PROJECTS\ENERGAN\web-face\js\output.js', 'outputReg' );
-    metaData  = makeC_output( map, 'C:\PROJECTS\ENERGAN\energan_enb\data\Src\outputData.c', 'outputData' );
-    makeH_output ( map, metaData, 'C:\PROJECTS\ENERGAN\energan_enb\data\Inc\outputData.h' );
+    metaData  = makeC_output( map, 'C:\PROJECTS\ENERGAN\energan-configuration\out\outputData.c', 'outputData' );
+    makeH_output ( map, metaData, 'C:\PROJECTS\ENERGAN\energan-configuration\out\outputData.h' );

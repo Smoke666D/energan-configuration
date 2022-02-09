@@ -8,7 +8,7 @@ serialNumber0;0;0;1;;U;3;0;rw;Серийный номер
 serialNumber1;0;0;1;;U;3;0;rw;Серийный номер
 displayBrightnesLevel;0;100;1;%;U;1;50;rw;Яркость дисплея
 displayContarstLevel;0;100;1;%;U;1;30;rw;Контрастность дисплея
-displaySleepDelay;0;600;1;сек;U;1;10;rw;Время переходя в спящий режим
+displaySleepDelay;5;600;1;сек;U;1;10;rw;Время переходя в спящий режим
 modbusSetup;0;0;1;;U;1;0;rw;Сетевые настройки
 modbusAdr;1;255;1;;B;8;10;rw;Сетевой адрес
 modbusBaudrate;0;11;1;;B;4;9;rw;Сетевая скорость

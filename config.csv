@@ -1,8 +1,8 @@
 name;min;max;scale;units;type;length;default;rw;str
 $0;;;;;;;;;
-versionController;0;0;1;;U;1;1;rw;Версия контроллера
-versionFirmware;0;0;1;;U;1;1;rw;Версия прошивки
-versionBootloader;0;0;1;;U;1;1;rw;Версия бутлоудера
+versionController;0;0;1;;U;3;1;rw;Версия контроллера
+versionFirmware;0;0;1;;U;3;1;rw;Версия прошивки
+versionBootloader;0;0;1;;U;3;1;rw;Версия бутлоудера
 deviceID;0;0;1;;U;1;1;rw;Код изделия
 serialNumber0;0;0;1;;U;3;0;rw;Серийный номер
 serialNumber1;0;0;1;;U;3;0;rw;Серийный номер
@@ -72,7 +72,7 @@ speedLowAlarmLevel;0;6000;1;RPM;U;1;1200;rw;Нижний аварийный ур
 speedHightAlarmLevel;0;6000;1;RPM;U;1;1710;rw;Верхний аварийный уровень оборотов двигателя
 $6;;;;;;;;;
 diaSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа А
-diaFunction;0;27;1;;B;5;0;rw;Функция
+diaFunction;0;27;1;;B;5;17;rw;Функция
 diaPolarity;0;1;1;;B;1;0;rw;Полярность
 diaAction;0;3;1;;B;2;0;rw;Действие
 diaArming;0;4;1;;B;2;0;rw;Срабатывание
@@ -83,7 +83,7 @@ diaMessage2;0;0;1;;C;4;0;rw;Сообщение
 diaMessage3;0;0;1;;C;4;0;rw;Сообщение
 $7;;;;;;;;;
 dibSetup;0;1023;1;;U;1;0;rw;Настройки цифрового входа B
-dibFunction;0;27;1;;B;5;0;rw;Функция
+dibFunction;0;27;1;;B;5;18;rw;Функция
 dibPolarity;0;1;1;;B;1;0;rw;Полярность
 dibAction;0;3;1;;B;2;0;rw;Действие
 dibArming;0;4;1;;B;2;0;rw;Срабатывание

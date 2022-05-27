@@ -240,6 +240,7 @@ def makeJSON ( map, fileName, structName ):
         f.write( '   "type": "'      + row.type              + '",\n' );
         f.write( '   "rw": "'        + row.rw                + '",\n' );
         f.write( '   "len": '        + str( row.len )        + ',\n'  );
+        f.write( '   "str": "'       + row.str               + '",\n' );
         f.write( '   "bitMapSize": ' + str( row.bitMapSize ) + ',\n'  );
         f.write( '   "bit": ' );
         if ( row.bitMapSize > 0 ):

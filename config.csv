@@ -268,7 +268,7 @@ recordInputsEnb;0;1;1;;B;1;0;rw;Активировать фиксации циф
 recordOutputsEnb;0;1;1;;B;1;0;rw;Активировать фиксации цифровых выходов
 recordGenPhaseVoltageEnb;0;1;1;;B;1;0;rw;Активировать фиксации 
 recordGenLineVoltageEnb;0;1;1;;B;1;0;rw;Активировать фиксации 
-recordSetup1;0;65535;1;;U;1;1;rw;Настройки измерений
+recordSetup1;0;65535;1;;U;1;0;rw;Настройки измерений
 recordCurrentEnb;0;1;1;;B;1;0;rw;Активировать фиксации
 recordFreqGenEnb;0;1;1;;B;1;0;rw;Активировать фиксации
 recordCosFiEnb;0;1;1;;B;1;0;rw;Активировать фиксации

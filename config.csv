@@ -8,7 +8,7 @@ uniqueNumber0;0;0;1;;U;3;0;rw;Уникальный номер
 uniqueNumber1;0;0;1;;U;3;0;rw;Уникальный номер
 macAddress;0;0;1;;U;3;0;rw;MAC адрес
 releaseDate;0;0;1;;U;3;0;rw;Дата выпуска
-serialNumber;0;0;1;;U;3;0;rw;Серийный номер
+serialNumber;0;0;1;;U;2;0;rw;Серийный номер
 displayBrightnesLevel;0;100;1;%;U;1;50;rw;Яркость дисплея
 displayContarstLevel;0;100;1;%;U;1;30;rw;Контрастность дисплея
 displaySleepDelay;5;600;1;сек;U;1;10;rw;Время переходя в спящий режим
